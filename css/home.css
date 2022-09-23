@@ -1,0 +1,181 @@
+#section-home{
+    margin: 200px auto 60px auto;
+    padding: 10px;
+    width:70%;
+    height:100%;
+    display:flex;
+    flex-direction:row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+/* ============= Lado esquerdo da página ============= */
+
+#box-left{
+    width:50%;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    align-items: flex-start;
+}
+
+/* Card Postagem */
+.post-home{
+    width:115%;
+    height:350px;
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: space-between;
+    margin: 10px auto;
+    border-radius: 5px;
+    border-left: 10px solid #473f3f;
+    box-shadow: 0px 0px 15px #dad7d7;
+}
+.box-post-chapeu{
+    width:100%;
+    height:40px;
+    border-bottom: 2px solid #e6ede8;
+}
+.p-data{
+    height: 100%;
+    padding:5px 10px;
+}
+.box-conteudo-post{
+    width:100%;
+    height:calc(350px - 105px);
+    padding:10px 10px;
+}
+.link-post{
+    display: block;
+    font-size:28px;
+    text-align: left;
+    text-decoration: none;
+}
+.title{
+    color: rgb(59, 57, 57);
+}
+.content-post{
+    padding:5px;
+    width: 100%;
+    max-height: 120px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin: 10px auto 10px auto;
+    text-align: justify;
+    font-size:18px; 
+}
+.box-button{
+    width:100%;
+    height:100px;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding:10px 10px;
+    border-top: 2px solid #e6ede8;
+}
+.btn-ler-mais{
+    display: inline-block;
+    width:120px;
+    font-size:15px;
+    padding:8px 10px;
+    border: 2px solid rgb(221, 219, 219);
+    border-radius:20px;
+    text-align: center;
+    text-decoration: none;
+    color: #473f3f;
+    transition: 1s;
+}
+.btn-ler-mais:hover{
+    color: #473f3f;
+    border: 2px solid #787575;
+}
+.informacoes-do-post{
+    margin-right: 20px;
+    width: 130px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* ============= Lado direito da página ============= */
+
+#box-right{
+    width:40%;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    align-items: flex-start;
+}
+.box-chapeu{
+    background-color:rgb(236, 231, 231);
+    padding: 5px 0px 5px 10px;
+    color: rgb(129, 127, 127);
+}
+
+/* Card de Pesquisa */
+#search-home{
+    margin: 10px auto;
+    width:90%;
+    height:150px;
+    box-shadow: 0px 0px 15px #dad7d7;
+    background-color:white !important;
+}
+#box-inputs{
+    width: 100%;
+}
+#box-inputs > form{
+    width: 90%;
+    margin-top: 30px;
+    margin-left: 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+#box-inputs > form > input{
+    margin:0px 1px;
+    /* font-size: 20px; */
+}
+#box-inputs > input[type='submit']{
+    width: 150px;
+}
+
+/* Card de Destaque */
+#destaque-home{
+    margin: 10px auto;
+    width:90%;
+    height:100%;
+    box-shadow: 0px 0px 15px #dad7d7;
+}
+.box-destaque{
+    width: 100%;
+    background-color:white;
+    padding:10px;
+    border-bottom: 2px solid rgb(238, 235, 235);
+}
+.link-title-destaque-post{
+    text-decoration: none;
+    color:rgb(85, 82, 82);
+}
+
+/* Card de Categoria */
+#categoria-home{
+    margin: 10px auto;
+    width:90%;
+    height:100%;
+    box-shadow: 0px 0px 15px #dad7d7;
+}
+.box-categoria{
+    width: 100%;
+    background-color:white;
+    padding:10px;
+    border-bottom: 2px solid rgb(238, 235, 235);
+}
+.link-title-categoria-post{
+    text-decoration: none;
+    color:rgb(85, 82, 82);
+    cursor: pointer;
+}

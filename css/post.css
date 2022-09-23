@@ -1,0 +1,107 @@
+#section-post{
+    margin-top:150px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Card da Postagem */
+#box-post{
+    width: 80% !important;
+    background-color: white;
+    margin: 50px auto;
+    color: black;
+    border-bottom: 3px solid rgb(8, 28, 48); 
+    border-radius: 5px;
+}
+#box-post > div{
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+}
+
+/* Rodapé do card da Postagem */
+#box-info-post{
+    width: 100%;
+    background-color: rgb(8, 28, 48);
+    display: flex;
+    flex-direction:row;
+    align-items: center;
+}
+#box-info-post > .box-sobre-post > span{
+    color: white;
+}
+#box-curtir{
+    width:120px;
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:center;
+    color: red;
+}
+#input-curtir{
+    background:none;
+    width:24px; 
+    height:24px;
+    background-image: url('/blog/midia/icones/coracao1.png');
+    background-size: cover;
+    border: none;
+    outline: none;
+    transition: 0.5s;
+}
+#input-curtir:hover{
+    transition: 0.5s;
+    background-image: url('/blog/midia/icones/coracao2.png');
+}
+.box-sobre-post{
+    width:150px;
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:center; 
+    margin-left: 50px;
+}
+
+/* Box de comentários da postagem */
+#box-comentarios-usuario{
+    margin-top: 50px;
+    width:80%;
+    height:100%;
+}
+#titulo-comentarios{
+    margin-bottom: 50px;
+}
+.comentario{
+    width:100%;
+    height:100%;
+    margin-top: 10px;
+    padding:2px 20px;
+    border-bottom: 2px solid #f0ebeb;
+}
+.comentario > .p-conteudo{
+    width:100%;
+    margin: 0px auto;
+    height: 70px;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+/* Box do formulário para comentar sobre a postagem */
+#box-comentar-post{
+    width:80%;
+    margin-top: 100px;
+}
+#titulo-opiniao{
+    margin-bottom:20px;
+}
+#btn-comentar{
+    margin-top:15px;
+    width:150px;
+}
+
+
+
+
