@@ -7,8 +7,10 @@ class PostEntidade{
     private string $conteudo;
     private $data_postagem;
     private int $curtidas;
+    private int $quantidade_comentarios;
     private string $imagem_post;
     private int $fk_id_usuario;
+    private int $fk_id_categoria;
 
     public function setIdPostagem($id_postagem){
         $this->id_postagem = $id_postagem;
@@ -45,6 +47,13 @@ class PostEntidade{
         return $this->curtidas;
     }
 
+    public function setQuantidadeComentarios($quantidade_comentarios){
+        $this->quantidade_comentarios = $quantidade_comentarios;
+    }
+    public function getQuantidadeComentarios(){
+        return $this->quantidade_comentarios;
+    }
+
     public function setImagemPost($imagem_post){
         $this->imagem_post = $imagem_post;
     }
@@ -57,6 +66,13 @@ class PostEntidade{
     }
     public function getFkIdUsuario(){
         return $this->fk_id_usuario;
+    }
+
+    public function setFkIdCategoria($fk_id_categoria){
+        $this->fk_id_categoria = $fk_id_categoria;
+    }
+    public function getFkIdCategoria(){
+        return $this->fk_id_categoria;
     }
     
 }

@@ -70,23 +70,22 @@ class PostModel{
         $conteudo = $post->getConteudo();
         $data_postagem = $post->getDataPostagem();
         $curtidas = $post->getCurtidas();
+        $quantidade_comentarios = $post->getQuantidadeComentarios();
         $fk_id_usuario = $post->getFkIdUsuario();
-
-        $caminho_post = "";
-        $caminho_post = $this->uploadImagem();
-        // $post->setImagemPost($caminho_post);
+        $fk_id_categoria = $post->getFkIdCategoria();
 
         unset($_FILES);
 
         try{
             if(empty($this->erro_upload)){
-                $stmt = $this->con->prepare("INSERT INTO postagem(titulo,conteudo,data_postagem,curtidas,imagem_post,fk_id_usuario) VALUES(:titulo,:conteudo,:data_postagem,:curtidas,:imagem_post,:fk_id_usuario)");
+                $stmt = $this->con->prepare("INSERT INTO postagem(titulo,conteudo,data_postagem,curtidas,quantidade_comentarios,fk_id_usuario,fk_id_categoria) VALUES(:titulo,:conteudo,:data_postagem,:curtidas,:quantidade_comentarios,:fk_id_usuario,:fk_id_categoria)");
                 $stmt->bindParam(':titulo',$titulo);
                 $stmt->bindParam(':conteudo',$conteudo);
                 $stmt->bindParam(':data_postagem',$data_postagem);
                 $stmt->bindParam(':curtidas',$curtidas);
-                $stmt->bindParam(':imagem_post',$caminho_post);
+                $stmt->bindParam(':quantidade_comentarios',$quantidade_comentarios);
                 $stmt->bindParam(':fk_id_usuario',$fk_id_usuario);
+                $stmt->bindParam(':fk_id_categoria',$fk_id_categoria);
                 
                 unset($_POST);
 
@@ -95,6 +94,7 @@ class PostModel{
                 return $this->erro_upload;
             }
         }catch(Exception $e){
+            echo "Erro = ".$e->getMessage();
             die("Erro ao cadastrar nova postagem!");
         }
     }

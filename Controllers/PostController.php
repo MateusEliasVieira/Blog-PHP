@@ -72,19 +72,22 @@ class PostController extends Controller{
     public function cadastrar(){
         session_start();
         if((isset($_SESSION['token']) and !empty($_SESSION['token'])) and (isset($_SESSION['id_usuario']) and !empty($_SESSION['id_usuario']))){
-            if((isset($_POST['titulo']) and !empty($_POST['titulo'])) and (isset($_POST['conteudo']) and !empty($_POST['conteudo']))){
+            if((isset($_POST['titulo']) and !empty($_POST['titulo'])) and (isset($_POST['conteudo']) and !empty($_POST['conteudo'])) and (isset($_POST['categoria']) and !empty($_POST['categoria']))){
                
                 $titulo = $this->limparEntradaDeDados($_POST['titulo']);
                 $conteudo = $this->limparEntradaDeDados($_POST['conteudo']);
-                $id_usuario = $this->limparEntradaDeDados($_SESSION['id_usuario']);
+                $fk_id_usuario = $this->limparEntradaDeDados($_SESSION['id_usuario']);
+                $fk_id_categoria = $this->limparEntradaDeDados($_POST['categoria']);
                 
                 $postEntidade = new PostEntidade();
                 $postEntidade->setTitulo($titulo);
                 $postEntidade->setConteudo($conteudo);
-                $data_atual = date("Y-m-d");
+                $data_atual = date("Y-m-d H:i:s");
                 $postEntidade->setDataPostagem($data_atual);
                 $postEntidade->setCurtidas(0);
-                $postEntidade->setFkIdUsuario($id_usuario);
+                $postEntidade->setQuantidadeComentarios(0);
+                $postEntidade->setfkIdCategoria($fk_id_categoria);
+                $postEntidade->setFkIdUsuario($fk_id_usuario);
     
                 $postModel = new PostModel();
                 $resultado = $postModel->cadastrar($postEntidade);

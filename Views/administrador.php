@@ -4,7 +4,8 @@
 
 <section id="section-adm">
 
-    <form id="form" method="post" action="http://localhost/blog/post/cadastrar" enctype="multipart/form-data">
+    <form id="form" method="post" action="http://localhost/blog/post/cadastrar">
+       
         <!-- Caso exista erro ao fazer upload de imagem -->
         <?php if(isset($dados) and !empty($dados) and is_array($dados)){ ?>
             <div id="alerta-erro" class="alert alert-danger" role="alert">
@@ -41,6 +42,12 @@
             <input type="text" class="form-control" maxlength="50" name="titulo" id="floatingInput" required="required" placeholder="name@example.com" <?php if(isset($_POST['titulo'])){ echo "value='".$_POST['titulo']."'"; } ?> >
             <label for="floatingInput">Título</label>
         </div>
+        <select name="categoria" class="form-select form-select-lg mb-3" aria-label="Default select example" required="required">
+            <option selected value="">Selecione a Categoria</option>
+            <option value="1">Anuncios</option>
+            <option value="2">Html</option>
+            <option value="3">Css</option>
+        </select>
         <textarea name="conteudo" id="trumbowyg-editor" rows="5" required="required" placeholder="Conteúdo do artigo">
             <?php 
                 if(isset($_POST['conteudo'])){ 
@@ -48,9 +55,6 @@
                 } 
             ?>
         </textarea>
-        <div class="input-group">
-            <input type="file" name="imagem" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-        </div>
         <input id="btn-submit" type="submit" class="btn btn-success" value="Postar" name="SendCadArtigo" />
     </form>
 
