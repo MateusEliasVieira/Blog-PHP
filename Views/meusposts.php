@@ -6,7 +6,7 @@
         <h3>Minhas postagens</h3>
         <form action="">
             <input class="form-control" type="text" name="titulo-post" placeholder="título">
-            <input class="btn btn-success" type="submit" value="Pesquisar">
+            <input class="btn btn-dark" type="submit" value="Pesquisar">
         </form>
     </div>
     <div id="box-table">
@@ -16,6 +16,7 @@
                     <th scope="col">Id</th>
                     <th scope="col">Título</th>
                     <th scope="col">Curtidas</th>
+                    <th scope="col">Comentários</th>
                     <th scope="col">Data de Postagem</th>
                     <th scope="col">Opções</th>
                 </tr>
@@ -26,6 +27,7 @@
                         <th scope="row"><?php echo $postagem['id_postagem']; ?></th>
                         <td><?php echo $postagem['titulo']; ?></td>
                         <td><?php echo $postagem['curtidas']; ?></td>
+                        <td><?php echo $postagem['quantidade_comentarios']; ?></td>
                         <td><?php echo $postagem['data_postagem']; ?></td>
                         <td class="td-opcoes">
                             <form action="http://localhost/blog/post/editar" method="post">

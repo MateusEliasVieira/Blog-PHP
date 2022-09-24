@@ -55,7 +55,7 @@
                 } 
             ?>
         </textarea>
-        <input id="btn-submit" type="submit" class="btn btn-success" value="Postar" name="SendCadArtigo" />
+        <input id="btn-submit" type="submit" class="btn btn-dark" value="Postar" name="SendCadArtigo" />
     </form>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

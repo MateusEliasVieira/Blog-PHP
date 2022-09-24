@@ -14,43 +14,41 @@
 <body>
     <header>
         <nav>
-             <!-- Botão que aciona o menu -->
-            <button id="btn-menu" class="btn btn-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-                Menu
-            </button>
             <ul>
                 <li>Administrador</li>
                 <li><a href="/blog/login">Sair</a></li>
             </ul>
         </nav>
-        <!-- Menu -->
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Opções</h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <!-- <div>
-                    Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
-                </div> -->
-                <div class="dropdown mt-3">
-                <button id="btn-opcoes" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
-                   Selecione
-                </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item" href="http://localhost/blog/post/admin">Novo Post</a></li>
-                        <li><a class="dropdown-item" href="http://localhost/blog/post/meusposts">Meus Posts</a></li>
-                        <li><a class="dropdown-item" href="#">Add Usuário</a></li>
-                    </ul>
+        <div id="box-container-administrativo">
+     
+            <section id="menu-administrativo">
+                <div id="dados-administrador">
+                    <img src="/blog/midia/uploads/author-somos-devs.jpg" width="120px" height="120px" alt="Imagem do administrador">
+                    <h6>Mateus Elias Vieira</h6>
                 </div>
-            </div>
+                <ul>
+                    <li class="li-titulo">Postagem</li>
+                    <li><a class="link-opcao" href="http://localhost/blog/post/admin">Nova postagem</a></li>
+                    <li><a class="link-opcao" href="http://localhost/blog/post/meusposts">Minhas postagens</a></li>
+                    <li class="li-titulo">Usuários</li>
+                    <li><a class="link-opcao" href="#">Adicionar usuário</a></li>
+                    <li><a class="link-opcao" href="#">Listar usuários</a></li>
+                    <li class="li-titulo">Newsletter</li>
+                    <li><a class="link-opcao" href="#">Nova notícia</a></li>
+                    <li><a class="link-opcao" href="#">Inscritos</a></li>
+                    <li class="li-titulo">Perfil</li>
+                    <li><a class="link-opcao" href="#">Configurações</a></li>
+
+                </ul>
+            </section>
+            <?php
+                $this->carregarViewNoTemplate($nome_view,$dados);
+            ?>
         </div>
     </header>
 
 
-<?php
-    $this->carregarViewNoTemplate($nome_view,$dados);
-?>
+
 
     
 
