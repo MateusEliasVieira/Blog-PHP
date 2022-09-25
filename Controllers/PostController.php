@@ -4,31 +4,36 @@ class PostController extends Controller{
 
     // Métodos que podem ser acessados sem estar logado como adm
 
-
+    // Busca os dados para mostrar na view home.php
     public function index(){
         $postModel = new PostModel();
         $usuario_postagens = $postModel->listarUsuarioPostagens();
         $destaques = $postModel->listarDestaques();
-        $categoria = $postModel->listarCategorias();
-        $matriz = array($usuario_postagens,$destaques,$categoria);
+        $categorias = $postModel->listarCategorias();
+        $matriz = array($usuario_postagens,$destaques,$categorias);
         $this->carregarTemplate("home",$matriz);
     }
 
-    public function encerrar(){
-        session_start();
-        session_unset();
-        session_destroy();
-        $this->index();
-    }
-
-    public function exibir(string $titulo,$aviso = ""){
-        $id = $this->limparEntradaDeDados($titulo);
+    // Redireciona para a página da postagem em específica, após clicada nela
+    public function exibir(string $titulo, $aviso = ""){
+        $titulo = $this->limparEntradaDeDados($titulo);
         $titulo = str_replace("-"," ",$titulo);
         $postModel = new PostModel();
-        $post = $postModel->buscarPostPorTitulo($titulo);
-        $post_comentarios = $postModel->buscarPostComentarios($titulo);
-        $matriz = array($post,$post_comentarios,$aviso);
+        $postagem = $postModel->buscarPostPorTitulo($titulo);
+        $postagem_comentarios = $postModel->buscarPostComentarios($titulo);
+        $matriz = array($postagem,$postagem_comentarios, $aviso);
         $this->carregarTemplate("post",$matriz);
+    }
+
+    // Mostra as postagens apenas de uma determinada categoria
+    public function categoria(string $categoria){
+        $categoria = $this->limparEntradaDeDados($categoria);
+        $postModel = new PostModel();
+        $usuario_postagens = $postModel->listarUsuarioPostagensDaCategoria($categoria);
+        $destaques = $postModel->listarDestaques();
+        $categorias = $postModel->listarCategorias();
+        $matriz = array($usuario_postagens,$destaques,$categorias);
+        $this->carregarTemplate("home",$matriz);
     }
 
     public function curtir(){
@@ -55,8 +60,8 @@ class PostController extends Controller{
             $comentarioEntidade->setDataComentario($data_comentario);
             $comentarioEntidade->setFkIdPostagem($id_postagem);
 
-            $comentarioModel = new ComentarioModel();
-            $resultado = $comentarioModel->comentar($comentarioEntidade);
+            $postModel = new PostModel();
+            $resultado = $postModel->comentar($comentarioEntidade);
 
             $this->exibir($titulo);
             
@@ -72,7 +77,7 @@ class PostController extends Controller{
         session_start();
         if((isset($_SESSION['token']) and !empty($_SESSION['token'])) and (isset($_SESSION['id_usuario']) and !empty($_SESSION['id_usuario']))){
             $postModel = new PostModel();
-            $categorias = $postModel->buscarCategorias();
+            $categorias = $postModel->listarCategorias();
             $this->carregarTemplate("administrador",array($categorias,""));
         }else{
             $this->index();
@@ -85,7 +90,8 @@ class PostController extends Controller{
             if((isset($_POST['titulo']) and !empty($_POST['titulo'])) and (isset($_POST['conteudo']) and !empty($_POST['conteudo'])) and (isset($_POST['categoria']) and !empty($_POST['categoria']))){
                
                 $titulo = $this->limparEntradaDeDados($_POST['titulo']);
-                $conteudo = $this->limparEntradaDeDados($_POST['conteudo']);
+                // $conteudo = $this->limparEntradaDeDados($_POST['conteudo']);
+                $conteudo = $_POST['conteudo'];
                 $fk_id_usuario = $this->limparEntradaDeDados($_SESSION['id_usuario']);
                 $fk_id_categoria = $this->limparEntradaDeDados($_POST['categoria']);
                 
@@ -101,14 +107,14 @@ class PostController extends Controller{
     
                 $postModel = new PostModel();
                 $resultado = $postModel->cadastrar($postEntidade);
-                $categorias = $postModel->buscarCategorias();
+                $categorias = $postModel->listarCategorias();
     
                 $this->carregarTemplate("administrador",array($categorias,$resultado));
                 
             }else{
                 $aviso = "Por favor, preencha todos os campos!";
                 $postModel = new PostModel();
-                $categorias = $postModel->buscarCategorias();
+                $categorias = $postModel->listarCategorias();
                 $this->carregarTemplate("administrador",array($categorias,$aviso));
             }
         }else{
@@ -139,7 +145,7 @@ class PostController extends Controller{
                 $id_postagem = $this->limparEntradaDeDados($_POST["id_postagem"]);
                 $postModel = new PostModel();
                 $postagem = $postModel->buscarPostPorId($id_postagem);
-                $categorias = $postModel->buscarCategorias();
+                $categorias = $postModel->listarCategorias();
                 $this->carregarTemplate("editarpost",array($postagem,$categorias,""));
             }
         }else{
@@ -168,7 +174,7 @@ class PostController extends Controller{
                 $resposta = $postModel->atualizar($postEntidade);
 
                 $postagem = $postModel->buscarPostPorTitulo($titulo);
-                $categorias = $postModel->buscarCategorias();
+                $categorias = $postModel->listarCategorias();
                 $this->carregarTemplate("editarpost",array($postagem,$categorias,$resposta));
 
             }else{
@@ -176,7 +182,7 @@ class PostController extends Controller{
                 $id_postagem = $this->limparEntradaDeDados($_POST['id_postagem']);
                 $postModel = new PostModel();
                 $postagem = $postModel->buscarPostPorId($id_postagem);
-                $categorias = $postModel->buscarCategorias();
+                $categorias = $postModel->listarCategorias();
                 $resposta = "Preencha todos os dados!";
                 $this->carregarTemplate("editarpost",array($postagem,$categorias,$resposta));
             }

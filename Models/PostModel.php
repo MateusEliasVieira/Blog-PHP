@@ -12,6 +12,7 @@ class PostModel{
         $this->con = Conexao::getConnection();
     }
 
+    // Realiza upload de imagem
     private function uploadImagem(){
 
         if(isset($_FILES['imagem']) and !empty($_FILES['imagem'])){
@@ -64,6 +65,7 @@ class PostModel{
 
     }
 
+    // Cadastra uma nova postagem
     public function cadastrar(PostEntidade $post){   
         $titulo = $post->getTitulo();
         $conteudo = $post->getConteudo();
@@ -88,13 +90,12 @@ class PostModel{
         }
     }
 
+    // Atualiza uma postagem
     public function atualizar(PostEntidade $post){
-     
         $id_postagem = $post->getIdPostagem();
         $titulo = $post->getTitulo();
         $conteudo = $post->getConteudo();
         $fk_id_categoria = $post->getFkIdCategoria();
-
         try{
             if(empty($this->erro_upload)){
 
@@ -103,9 +104,7 @@ class PostModel{
                 $stmt->bindParam(':conteudo',$conteudo);
                 $stmt->bindParam(':fk_id_categoria',$fk_id_categoria);
                 $stmt->bindParam(':id_postagem',$id_postagem);
-
                 unset($_POST);
-
                 return $stmt->execute();
             }else{
                 return $this->erro_upload;
@@ -113,10 +112,9 @@ class PostModel{
         }catch(Exception $e){
             die("Erro ao atualizar postagem!");
         }
-        
     } 
 
-
+    // Lista todas as postagens por data mais recente
     public function listarPostagens(){
         try{
             $sql = "SELECT * FROM postagem ORDER BY data_postagem DESC";
@@ -129,42 +127,7 @@ class PostModel{
         }
     }
 
-    public function listarUsuarioPostagens(){
-        try{
-            $sql = "SELECT U.nome,P.titulo,P.conteudo,P.curtidas,P.quantidade_comentarios,P.data_postagem from usuario_adm as U inner join postagem as P on U.id_usuario = P.fk_id_usuario";
-            $stmt = $this->con->prepare($sql);
-            $stmt->execute();
-            $usuario_postagens = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return $usuario_postagens;
-        }catch(Exception $e){
-            die("Erro ao buscar usuário e suas postagens na base de dados!");
-        }
-    }
-
-    public function listarCategorias(){
-        try{
-            $sql = "SELECT * FROM categoria";
-            $stmt = $this->con->prepare($sql);
-            $stmt->execute();
-            $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return $categorias;
-        }catch(Exception $e){
-            die("Erro ao buscar categorias na base de dados!");
-        }
-    }
-
-    public function listarDestaques(){
-        try{
-            $sql = "SELECT * FROM postagem ORDER BY data_postagem DESC LIMIT 3";
-            $stmt = $this->con->prepare($sql);
-            $stmt->execute();
-            $destaques = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return $destaques;
-        }catch(Exception $e){
-            die("Erro ao buscar postagens em destaques na base de dados!");
-        }
-    }
-
+    // Busca uma única postagem através de seu id
     public function buscarPostPorId(int $id_postagem){
         try{
             $sql = "SELECT * FROM postagem WHERE id_postagem = :id_postagem LIMIT 1";
@@ -178,6 +141,7 @@ class PostModel{
         }
     }
 
+    // Busca uma única postagem através de seu título
     public function buscarPostPorTitulo(string $titulo){
         try{
             $sql = "SELECT * FROM postagem WHERE titulo = :titulo LIMIT 1";
@@ -191,7 +155,56 @@ class PostModel{
         }
     }
 
-    public function buscarCategorias(){
+    // Lista as postagens do usuário que esta ativo na sessão
+    public function meusposts($id_usuario){
+        try{
+            $sql = "SELECT P.id_postagem, P.titulo, P.conteudo , P.curtidas, P.quantidade_comentarios, P.data_postagem FROM postagem as P inner join usuario_adm as U on U.id_usuario = P.fk_id_usuario WHERE U.id_usuario = :id_usuario";
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindValue(':id_usuario',$id_usuario);
+            $stmt->execute();
+            $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $posts;
+        }catch(Exception $e){
+            die("Erro ao buscar meus posts!");
+        }
+    }
+
+    // Lista todos so usuários e suas postagens 
+    public function listarUsuarioPostagens(){
+        try{
+            $sql = "SELECT U.nome,P.titulo,P.conteudo,P.curtidas,P.quantidade_comentarios,P.data_postagem from usuario_adm as U inner join postagem as P on U.id_usuario = P.fk_id_usuario";
+            $stmt = $this->con->prepare($sql);
+            $stmt->execute();
+            $usuario_postagens = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $usuario_postagens;
+        }catch(Exception $e){
+            die("Erro ao buscar usuário e suas postagens na base de dados!");
+        }
+    }
+    
+    public function listarUsuarioPostagensDaCategoria(string $categoria){
+        try{
+            $sql = "SELECT U.nome,P.titulo,P.conteudo,P.curtidas,P.quantidade_comentarios,P.data_postagem 
+            FROM usuario_adm AS U 
+            INNER JOIN postagem AS P 
+            ON U.id_usuario = P.fk_id_usuario 
+            INNER JOIN categoria AS C 
+            ON P.fk_id_categoria = C.id_categoria 
+            WHERE C.nome_categoria = :categoria";
+
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindValue(":categoria",$categoria);
+            $stmt->execute();
+            $usuario_postagens = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $usuario_postagens;
+
+        }catch(Exception $e){
+
+        }
+    }
+
+    // Busca todas as categorias
+    public function listarCategorias(){
         try{
             $sql = "SELECT * FROM categoria";
             $stmt = $this->con->prepare($sql);
@@ -203,8 +216,22 @@ class PostModel{
         }
     }
 
+    // Busca as postagens em destaque, isto é, as três primeiras mais recentes
+    public function listarDestaques(){
+        try{
+            $sql = "SELECT * FROM postagem ORDER BY data_postagem DESC LIMIT 3";
+            $stmt = $this->con->prepare($sql);
+            $stmt->execute();
+            $destaques = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $destaques;
+        }catch(Exception $e){
+            die("Erro ao buscar postagens em destaques na base de dados!");
+        }
+    }
 
+    // Busca uma postagem e seus comentários
     public function buscarPostComentarios(string $titulo){
+        // echo "<h1 style='position:fixed; z-index:20;'>".$titulo."</h1>";
         try{
             $sql = "SELECT * FROM postagem as p inner join comentario as c on p.id_postagem = c.fk_id_postagem WHERE p.titulo = :titulo";
             $stmt = $this->con->prepare($sql);
@@ -237,6 +264,7 @@ class PostModel{
         }
     }
 
+    // Curtir uma postagem
     public function curtir(int $id_postagem){
         try{
             $sql = "SELECT curtidas FROM postagem WHERE id_postagem = :id_postagem";
@@ -255,16 +283,35 @@ class PostModel{
         }
     }
 
-    public function meusposts($id_usuario){
+    // Comentar uma postagem
+    public function comentar(ComentarioEntidade $comentario){
         try{
-            $sql = "SELECT P.id_postagem, P.titulo, P.conteudo , P.curtidas, P.quantidade_comentarios, P.data_postagem FROM postagem as P inner join usuario_adm as U on U.id_usuario = P.fk_id_usuario WHERE U.id_usuario = :id_usuario";
+            $sql = "INSERT INTO comentario(nome,mensagem,data_comentario,fk_id_postagem) VALUES(:nome,:mensagem,:data_comentario,:fk_id_postagem)";
             $stmt = $this->con->prepare($sql);
-            $stmt->bindValue(':id_usuario',$id_usuario);
-            $stmt->execute();
-            $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return $posts;
+            $stmt->bindValue(':nome',$comentario->getNome());
+            $stmt->bindValue(':mensagem',$comentario->getMensagem());
+            $stmt->bindValue(':data_comentario',$comentario->getDataComentario());
+            $stmt->bindValue(':fk_id_postagem',$comentario->getFkIdPostagem());
+            $resultado = $stmt->execute();
+            if($resultado){
+                $sql = "SELECT quantidade_comentarios FROM postagem WHERE id_postagem = :id_postagem";
+                $stmt = $this->con->prepare($sql);
+                $stmt->bindValue(':id_postagem',$comentario->getFkIdPostagem());
+                $stmt->execute();
+                extract($stmt->fetch(PDO::FETCH_ASSOC));
+                $quantidade_comentarios += 1;
+
+                $sql = "UPDATE postagem SET quantidade_comentarios = :quantidade_comentarios WHERE id_postagem = :id_postagem";
+                $stmt = $this->con->prepare($sql);
+                $stmt->bindValue(':quantidade_comentarios',$quantidade_comentarios);
+                $stmt->bindValue(':id_postagem',$comentario->getFkIdPostagem());
+                $resultado = $stmt->execute();
+                return $resultado;
+            }else{
+                return $resultado;
+            }
         }catch(Exception $e){
-            die("Erro ao buscar meus posts!");
+            die("Erro ao comentar sobre o post");
         }
     }
 

@@ -52,7 +52,7 @@
                 <?php } ?>
             <?php } ?>
         </select>
-        <textarea name="conteudo" id="trumbowyg-editor" rows="5" required="required" placeholder="Conteúdo do artigo">
+        <textarea name="conteudo" id="ckeditor" required="required" placeholder="Conteúdo do artigo">
             <?php 
                 if(isset($_POST['conteudo'])){ 
                     echo $_POST['conteudo']; 
@@ -62,7 +62,7 @@
         <input id="btn-submit" type="submit" class="btn btn-dark" value="Postar" name="submit_cadastrar" />
     </form>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="../dist/trumbowyg.min.js"></script>
     <script type="text/javascript" src="../dist/langs/pt_br.min.js"></script>
     <script src="../dist/plugins/emoji/trumbowyg.emoji.min.js"></script>
@@ -86,6 +86,21 @@
             ],
             autogrow: true
         });
-    </script>
+    </script> -->
+    <script src="/blog/vendor/ckeditor/build/ckeditor.js"></script>
+	<script>ClassicEditor
+			.create( document.querySelector( '#ckeditor' ), {			
+				licenseKey: '',			
+			} )
+			.then( editor => {
+					window.editor = editor;				
+			} )
+			.catch( error => {
+				console.error( 'Oops, something went wrong!' );
+				console.error( 'Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:' );
+				console.warn( 'Build id: hgw637q8k2yp-fb809xrcsyrn' );
+				console.error( error );
+			} );
+	</script>
 </section>
 

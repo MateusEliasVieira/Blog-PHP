@@ -16,7 +16,7 @@
         <nav>
             <ul>
                 <li>Administrador</li>
-                <li><a href="/blog/post/encerrar">Sair</a></li>
+                <li><a href="/blog/login/encerrar">Sair</a></li>
             </ul>
         </nav>
         <div id="box-container-administrativo">

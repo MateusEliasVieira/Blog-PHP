@@ -1,16 +1,21 @@
 
 <link rel="stylesheet" href="<?php echo INCLUDE_PATH; ?>css/post.css"/>
+<?php
+    $postagem = (isset($dados[0]) and is_array($dados[0]) and !empty($dados[0])) ? $dados[0] : array();
+    $postagem_comentarios = (isset($dados[1]) and is_array($dados[1]) and !empty($dados[1])) ? $dados[1] : array();
+    $aviso = (isset($dados[2]) and !empty($dados[2])) ? $dados[2] : "";
+?>
 
 <section id="section-post">
 
     <!-- Card da Postagem -->
     <div id="box-post">
         <div>
-            <h2><?php echo $dados[0]['titulo']; ?></h2>
-            <p><?php echo $dados[0]['conteudo']; ?></p>
+            <h2><?php echo $postagem['titulo']; ?></h2>
+            <p><?php echo $postagem['conteudo']; ?></p>
             <p>
                 <?php 
-                    $data_hora = explode(" ",$dados[0]['data_postagem']);
+                    $data_hora = explode(" ",$postagem['data_postagem']);
     
                     $data = $data_hora[0];
                     $horario = $data_hora[1];
@@ -32,15 +37,15 @@
                 <div id="box-curtir">
                     <input id="input-curtir" type="submit" name="submit_curtir" title="Curtir postagem" value=""/> 
                     <span id="span-curtida"> 
-                        <?php echo $dados[0]['curtidas']." curtidas"; ?> 
+                        <?php echo $postagem['curtidas']." curtidas"; ?> 
                     </span>
                 </div>
-                <input type="hidden" name="titulo" value="<?php echo $dados[0]['titulo']; ?>">
-                <input type="hidden" name="id_postagem" value="<?php echo $dados[0]['id_postagem']?>"/>
+                <input type="hidden" name="titulo" value="<?php echo $postagem['titulo']; ?>">
+                <input type="hidden" name="id_postagem" value="<?php echo $postagem['id_postagem']?>"/>
             </form>
             <div class="box-sobre-post">
                 <img src="/blog/midia/icones/comentarios.png" alt="ícone de comentários" width="24px" height="24px"/>
-                <span id="span-comentarios"> <?php echo $dados[0]['quantidade_comentarios']; ?> comentários</span>
+                <span id="span-comentarios"> <?php echo $postagem['quantidade_comentarios']; ?> comentários</span>
             </div>
         </div>
     </div>
@@ -50,7 +55,7 @@
 
         <h3 id="titulo-comentarios">Comentários</h3>
 
-        <?php foreach ($dados[1] as $comentario) { ?>
+        <?php foreach ($postagem_comentarios as $comentario) { ?>
 
             <?php if(isset($comentario['id_comentario'])){?>
                 <div class="comentario">
@@ -83,9 +88,9 @@
     <div id="box-comentar-post">
         <form action="http://localhost/blog/post/comentar" method="post">
             
-            <?php if(isset($dados[2]) and !empty($dados[2])){?>
+            <?php if(isset($aviso) and !empty($aviso)){?>
                 <div id="alerta-erro" class="alert alert-danger" role="alert">
-                    <?php echo $dados[2];?>
+                    <?php echo $aviso;?>
                 </div>
                 <script type="text/javascript">
                     setTimeout(()=>{
@@ -105,8 +110,8 @@
                 <label for="floatingTextarea">Deixe aqui seu comentário</label>
             </div>
 
-            <input type="hidden" name="id_postagem" value="<?php echo $dados[0]['id_postagem']; ?>">
-            <input type="hidden" name="titulo" value="<?php echo $dados[0]['titulo']; ?>">
+            <input type="hidden" name="id_postagem" value="<?php echo $postagem['id_postagem']; ?>">
+            <input type="hidden" name="titulo" value="<?php echo $postagem['titulo']; ?>">
 
             <input id="btn-comentar" class="btn btn-dark" type="submit" name="submit_enviar_comentario" value="Publicar">
         </form>
