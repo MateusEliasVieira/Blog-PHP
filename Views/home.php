@@ -29,14 +29,14 @@
                 </div>
 
                 <div class="box-conteudo-post">
-                    <a class="link-post title" <?php echo 'href="post/exibir/'.str_replace(" ","-",$usuario_postagens['titulo']).'"'; ?>> <?php echo $usuario_postagens['titulo']; ?> </a>
+                    <a class="link-post title" <?php echo 'href="/blog/post/exibir/'.str_replace(" ","-",$usuario_postagens['titulo']).'"'; ?>> <?php echo $usuario_postagens['titulo']; ?> </a>
                     <div class="content-post"> 
                         <?php echo $usuario_postagens['conteudo']; ?>
                     </div>
                 </div>
 
                 <div class="box-button">
-                    <a <?php echo 'href="post/exibir/'.str_replace(" ","-",$usuario_postagens['titulo']).'"'; ?> class="btn-ler-mais">Leia mais</a>
+                    <a <?php echo 'href="/blog/post/exibir/'.str_replace(" ","-",$usuario_postagens['titulo']).'"'; ?> class="btn-ler-mais">Leia mais</a>
                     <div class="informacoes-do-post">
                         <div >
                             <img src="/blog/midia/icones/coracao2.png" width="24px" alt="">

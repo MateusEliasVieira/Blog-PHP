@@ -64,8 +64,7 @@ class PostModel{
 
     }
 
-    public function cadastrar(PostEntidade $post){
-     
+    public function cadastrar(PostEntidade $post){   
         $titulo = $post->getTitulo();
         $conteudo = $post->getConteudo();
         $data_postagem = $post->getDataPostagem();
@@ -73,28 +72,18 @@ class PostModel{
         $quantidade_comentarios = $post->getQuantidadeComentarios();
         $fk_id_usuario = $post->getFkIdUsuario();
         $fk_id_categoria = $post->getFkIdCategoria();
-
-        unset($_FILES);
-
         try{
-            if(empty($this->erro_upload)){
-                $stmt = $this->con->prepare("INSERT INTO postagem(titulo,conteudo,data_postagem,curtidas,quantidade_comentarios,fk_id_usuario,fk_id_categoria) VALUES(:titulo,:conteudo,:data_postagem,:curtidas,:quantidade_comentarios,:fk_id_usuario,:fk_id_categoria)");
-                $stmt->bindParam(':titulo',$titulo);
-                $stmt->bindParam(':conteudo',$conteudo);
-                $stmt->bindParam(':data_postagem',$data_postagem);
-                $stmt->bindParam(':curtidas',$curtidas);
-                $stmt->bindParam(':quantidade_comentarios',$quantidade_comentarios);
-                $stmt->bindParam(':fk_id_usuario',$fk_id_usuario);
-                $stmt->bindParam(':fk_id_categoria',$fk_id_categoria);
-                
-                unset($_POST);
-
-                return $stmt->execute();
-            }else{
-                return $this->erro_upload;
-            }
+            $stmt = $this->con->prepare("INSERT INTO postagem(titulo,conteudo,data_postagem,curtidas,quantidade_comentarios,fk_id_usuario,fk_id_categoria) VALUES(:titulo,:conteudo,:data_postagem,:curtidas,:quantidade_comentarios,:fk_id_usuario,:fk_id_categoria)");
+            $stmt->bindParam(':titulo',$titulo);
+            $stmt->bindParam(':conteudo',$conteudo);
+            $stmt->bindParam(':data_postagem',$data_postagem);
+            $stmt->bindParam(':curtidas',$curtidas);
+            $stmt->bindParam(':quantidade_comentarios',$quantidade_comentarios);
+            $stmt->bindParam(':fk_id_usuario',$fk_id_usuario);
+            $stmt->bindParam(':fk_id_categoria',$fk_id_categoria);       
+            unset($_POST);
+            return $stmt->execute();  
         }catch(Exception $e){
-            echo "Erro = ".$e->getMessage();
             die("Erro ao cadastrar nova postagem!");
         }
     }
@@ -104,19 +93,15 @@ class PostModel{
         $id_postagem = $post->getIdPostagem();
         $titulo = $post->getTitulo();
         $conteudo = $post->getConteudo();
-
-        $caminho_post = "";
-        $caminho_post = $this->uploadImagem();
-
-        unset($_FILES);
+        $fk_id_categoria = $post->getFkIdCategoria();
 
         try{
             if(empty($this->erro_upload)){
 
-                $stmt = $this->con->prepare("UPDATE postagem SET titulo = :titulo, conteudo = :conteudo, imagem_post = :imagem_post WHERE id_postagem = :id_postagem");
+                $stmt = $this->con->prepare("UPDATE postagem SET titulo = :titulo, conteudo = :conteudo, fk_id_categoria = :fk_id_categoria WHERE id_postagem = :id_postagem");
                 $stmt->bindParam(':titulo',$titulo);
                 $stmt->bindParam(':conteudo',$conteudo);
-                $stmt->bindParam(':imagem_post',$caminho_post);
+                $stmt->bindParam(':fk_id_categoria',$fk_id_categoria);
                 $stmt->bindParam(':id_postagem',$id_postagem);
 
                 unset($_POST);
@@ -180,7 +165,20 @@ class PostModel{
         }
     }
 
-    public function buscarPost(string $titulo){
+    public function buscarPostPorId(int $id_postagem){
+        try{
+            $sql = "SELECT * FROM postagem WHERE id_postagem = :id_postagem LIMIT 1";
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindValue(':id_postagem',$id_postagem);
+            $stmt->execute();
+            $post = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $post;
+        }catch(Exception $e){
+            die("Erro ao buscar postagem por id na base de dados!");
+        }
+    }
+
+    public function buscarPostPorTitulo(string $titulo){
         try{
             $sql = "SELECT * FROM postagem WHERE titulo = :titulo LIMIT 1";
             $stmt = $this->con->prepare($sql);
@@ -189,9 +187,23 @@ class PostModel{
             $post = $stmt->fetch(PDO::FETCH_ASSOC);
             return $post;
         }catch(Exception $e){
-            die("Erro ao buscar postagem na base de dados!");
+            die("Erro ao buscar postagem por titulo na base de dados!");
         }
     }
+
+    public function buscarCategorias(){
+        try{
+            $sql = "SELECT * FROM categoria";
+            $stmt = $this->con->prepare($sql);
+            $stmt->execute();
+            $post = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $post;
+        }catch(Exception $e){
+            die("Erro ao buscar categorias na base de dados!");
+        }
+    }
+
+
     public function buscarPostComentarios(string $titulo){
         try{
             $sql = "SELECT * FROM postagem as p inner join comentario as c on p.id_postagem = c.fk_id_postagem WHERE p.titulo = :titulo";

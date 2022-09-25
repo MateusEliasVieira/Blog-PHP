@@ -30,13 +30,13 @@
         <div id="box-info-post">
             <form method="post" action="http://localhost/blog/post/curtir">
                 <div id="box-curtir">
-                    <input id="input-curtir" type="submit" name="submit-curtir" title="Curtir postagem" value=""/> 
+                    <input id="input-curtir" type="submit" name="submit_curtir" title="Curtir postagem" value=""/> 
                     <span id="span-curtida"> 
                         <?php echo $dados[0]['curtidas']." curtidas"; ?> 
                     </span>
                 </div>
-                <input type="hidden" name="titulo-post" value="<?php echo $dados[0]['titulo']; ?>">
-                <input type="hidden" name="id-post" value="<?php echo $dados[0]['id_postagem']?>"/>
+                <input type="hidden" name="titulo" value="<?php echo $dados[0]['titulo']; ?>">
+                <input type="hidden" name="id_postagem" value="<?php echo $dados[0]['id_postagem']?>"/>
             </form>
             <div class="box-sobre-post">
                 <img src="/blog/midia/icones/comentarios.png" alt="ícone de comentários" width="24px" height="24px"/>
@@ -97,18 +97,18 @@
             
             <h3 id="titulo-opiniao">Conte-nos sua opinião</h3>
             <div class="form-floating mb-3">
-                <input type="Nome" class="form-control" name="nome-usuario" id="floatingInput" placeholder="name@example.com">
+                <input type="Nome" class="form-control" name="nome" id="floatingInput" placeholder="name@example.com">
                 <label for="floatingInput">Nome</label>
             </div>
             <div class="form-floating">
-                <textarea class="form-control" name="comentario-usuario" placeholder="Leave a comment here" id="floatingTextarea" style="height: 200px"></textarea>
+                <textarea class="form-control" name="comentario" placeholder="Leave a comment here" id="floatingTextarea" style="height: 200px"></textarea>
                 <label for="floatingTextarea">Deixe aqui seu comentário</label>
             </div>
 
-            <input type="hidden" name="id-postagem" value="<?php echo $dados[0]['id_postagem']; ?>">
-            <input type="hidden" name="titulo-postagem" value="<?php echo $dados[0]['titulo']; ?>">
+            <input type="hidden" name="id_postagem" value="<?php echo $dados[0]['id_postagem']; ?>">
+            <input type="hidden" name="titulo" value="<?php echo $dados[0]['titulo']; ?>">
 
-            <input id="btn-comentar" class="btn btn-dark" type="submit" name="enviar-comentario" value="Publicar">
+            <input id="btn-comentar" class="btn btn-dark" type="submit" name="submit_enviar_comentario" value="Publicar">
         </form>
     </div>
 </section>

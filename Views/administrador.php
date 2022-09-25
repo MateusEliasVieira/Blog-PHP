@@ -1,24 +1,15 @@
 
 <link rel="stylesheet" href="<?php echo INCLUDE_PATH; ?>css/administrador.css"/>
 <link rel="stylesheet" href="../dist/ui/trumbowyg.min.css">
-
+<?php
+    $categorias = (isset($dados[0]) and is_array($dados[0]) and !empty($dados[0])) ? $dados[0] : array();
+    $resposta = (isset($dados[1]) and !empty($dados[1])) ? $dados[1] : "";
+?>
 <section id="section-adm">
-
     <form id="form" method="post" action="http://localhost/blog/post/cadastrar">
        
-        <!-- Caso exista erro ao fazer upload de imagem -->
-        <?php if(isset($dados) and !empty($dados) and is_array($dados)){ ?>
-            <div id="alerta-erro" class="alert alert-danger" role="alert">
-                <?php foreach($dados as $erro){
-                    echo $erro;
-                }?>
-            </div>
-            <script type="text/javascript">
-                setTimeout(()=>{
-                    document.getElementById("alerta-erro").style.display = "none";
-                },5000);
-            </script>
-        <?php }else if(isset($dados) and !empty($dados) and is_bool($dados) and $dados == true){ ?>
+       <!-- Caso exista algum erro para fazer a postagem, mostrará a mensagem de erro -->
+        <?php if(isset($resposta) and !empty($resposta) and is_bool($resposta) and $resposta == true){ ?>
             <div id="alerta-sucesso" class="alert alert-info" role="alert">
                 Postagem feita com sucesso!
             </div>
@@ -27,9 +18,18 @@
                     document.getElementById("alerta-sucesso").style.display = "none";
                 },5000);
             </script>
-            <?php } else if(isset($dados) and !empty($dados) and is_string($dados)){?>
+        <?php } else if(isset($resposta) and !empty($resposta) and is_bool($resposta) and $resposta == false){ ?>
+            <div id="alerta-sucesso" class="alert alert-danger" role="alert">
+                Erro ao fazer postagem!
+            </div>
+            <script type="text/javascript">
+                setTimeout(()=>{
+                    document.getElementById("alerta-sucesso").style.display = "none";
+                },5000);
+            </script>
+        <?php } else if(isset($resposta) and !empty($resposta) and is_string($resposta)){ ?>
             <div id="alerta-erro" class="alert alert-danger" role="alert">
-                <?php echo $dados; ?>
+                <?php echo $resposta; ?>
             </div>
             <script type="text/javascript">
                 setTimeout(()=>{
@@ -44,9 +44,13 @@
         </div>
         <select name="categoria" class="form-select form-select-lg mb-3" aria-label="Default select example" required="required">
             <option selected value="">Selecione a Categoria</option>
-            <option value="1">Anuncios</option>
-            <option value="2">Html</option>
-            <option value="3">Css</option>
+            <?php if(isset($categorias) and !empty($categorias)){ ?>
+                <?php  foreach($categorias as $categoria){?>
+                    <option value="<?php echo $categoria['id_categoria']; ?>">
+                        <?php echo $categoria['nome_categoria'];?>
+                    </option>
+                <?php } ?>
+            <?php } ?>
         </select>
         <textarea name="conteudo" id="trumbowyg-editor" rows="5" required="required" placeholder="Conteúdo do artigo">
             <?php 
@@ -55,7 +59,7 @@
                 } 
             ?>
         </textarea>
-        <input id="btn-submit" type="submit" class="btn btn-dark" value="Postar" name="SendCadArtigo" />
+        <input id="btn-submit" type="submit" class="btn btn-dark" value="Postar" name="submit_cadastrar" />
     </form>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
