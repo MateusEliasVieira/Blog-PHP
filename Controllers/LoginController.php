@@ -41,7 +41,9 @@ class LoginController extends Controller{
 
         }else{
             // Já existe sessão
-            $this->carregarTemplate("administrador", array());
+            $postModel = new PostModel();
+            $categorias = $postModel->listarCategorias();
+            $this->carregarTemplate("administrador",array($categorias,""));
         }
     }
     

@@ -161,7 +161,6 @@ class PostController extends Controller{
                 $conteudo = $this->limparEntradaDeDados($_POST['conteudo']);
                 $fk_id_categoria = $this->limparEntradaDeDados($_POST['categoria']);
                 $id_postagem = $this->limparEntradaDeDados($_POST['id_postagem']);
-                $id_usuario = $this->limparEntradaDeDados($_SESSION['id_usuario']);
                 
                 $postEntidade = new PostEntidade();
                 $postEntidade->setIdPostagem($id_postagem);
@@ -172,7 +171,7 @@ class PostController extends Controller{
                 $postModel = new PostModel();
                 $resposta = $postModel->atualizar($postEntidade);
 
-                $postagem = $postModel->buscarPostPorTitulo($titulo);
+                $postagem = $postModel->buscarPostPorId($id_postagem);
                 $categorias = $postModel->listarCategorias();
                 $this->carregarTemplate("editarpost",array($postagem,$categorias,$resposta));
 
