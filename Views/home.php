@@ -38,7 +38,7 @@
                     <div class="box-conteudo-post">
                         <a class="link-post title" <?php echo 'href="/blog/post/exibir/'.str_replace(" ","-",$usuario_postagem['titulo']).'"'; ?>> <?php echo $usuario_postagem['titulo']; ?> </a>
                         <div class="content-post"> 
-                            <?php echo $usuario_postagem['conteudo']; ?>
+                            <?php echo html_entity_decode($usuario_postagem['conteudo']); ?>
                         </div>
                     </div>
 

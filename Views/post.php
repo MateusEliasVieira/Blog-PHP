@@ -12,7 +12,7 @@
     <div id="box-post">
         <div>
             <h2><?php echo $postagem['titulo']; ?></h2>
-            <p><?php echo $postagem['conteudo']; ?></p>
+            <p><?php echo html_entity_decode($postagem['conteudo']); ?></p>
             <p>
                 <?php 
                     $data_hora = explode(" ",$postagem['data_postagem']);

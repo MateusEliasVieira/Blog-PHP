@@ -8,8 +8,9 @@
     align-items: center;
     background-color:#ffffff !important;
 }
-#ckeditor{
-    max-width: 600px !important;
+/* Define a altura do ckeditor */
+.ck-editor__editable_inline{
+    min-height: 400px;
 }
 #form{
     width:80%;

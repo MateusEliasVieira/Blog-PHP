@@ -90,8 +90,7 @@ class PostController extends Controller{
             if((isset($_POST['titulo']) and !empty($_POST['titulo'])) and (isset($_POST['conteudo']) and !empty($_POST['conteudo'])) and (isset($_POST['categoria']) and !empty($_POST['categoria']))){
                
                 $titulo = $this->limparEntradaDeDados($_POST['titulo']);
-                // $conteudo = $this->limparEntradaDeDados($_POST['conteudo']);
-                $conteudo = $_POST['conteudo'];
+                $conteudo = filter_input(INPUT_POST,'conteudo',FILTER_SANITIZE_SPECIAL_CHARS);
                 $fk_id_usuario = $this->limparEntradaDeDados($_SESSION['id_usuario']);
                 $fk_id_categoria = $this->limparEntradaDeDados($_POST['categoria']);
                 
