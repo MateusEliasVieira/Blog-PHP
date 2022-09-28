@@ -22,7 +22,7 @@
 /* Card Postagem */
 .post-home{
     width:115%;
-    height:350px;
+    height:230px;
     display:flex;
     flex-direction:column;
     justify-content: center;
@@ -43,7 +43,11 @@
 }
 .box-conteudo-post{
     width:100%;
-    height:calc(350px - 105px);
+    height:150px;
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     padding:10px 10px;
 }
 .link-post{
@@ -54,16 +58,6 @@
 }
 .title{
     color: rgb(59, 57, 57);
-}
-.content-post{
-    padding:5px;
-    width: 100%;
-    max-height: 120px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    margin: 10px auto 10px auto;
-    text-align: justify;
-    font-size:18px; 
 }
 .box-button{
     width:100%;

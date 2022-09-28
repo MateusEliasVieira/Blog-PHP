@@ -84,7 +84,22 @@ class PostModel{
             $stmt->bindParam(':fk_id_usuario',$fk_id_usuario);
             $stmt->bindParam(':fk_id_categoria',$fk_id_categoria);       
             unset($_POST);
-            return $stmt->execute();  
+            $resposta = $stmt->execute(); 
+            
+            if($resposta){
+                $stmt = $this->con->prepare("SELECT quantidade_postagens from categoria WHERE id_categoria = :id_categoria");
+                $stmt->bindParam(':id_categoria',$fk_id_categoria);
+                $stmt->execute();
+                extract($stmt->fetch(PDO::FETCH_ASSOC));
+                $quantidade_postagens += 1;
+
+                $stmt = $this->con->prepare("UPDATE categoria SET quantidade_postagens = :quantidade_postagens WHERE id_categoria = :id_categoria");
+                $stmt->bindParam(':quantidade_postagens',$quantidade_postagens);
+                $stmt->bindParam(':id_categoria',$fk_id_categoria);
+                $resposta = $stmt->execute();
+            }
+
+            return $resposta;
         }catch(Exception $e){
             die("Erro ao cadastrar nova postagem!");
         }
@@ -172,7 +187,7 @@ class PostModel{
     // Lista todos so usuários e suas postagens 
     public function listarUsuarioPostagens(){
         try{
-            $sql = "SELECT U.nome,P.titulo,P.conteudo,P.curtidas,P.quantidade_comentarios,P.data_postagem from usuario_adm as U inner join postagem as P on U.id_usuario = P.fk_id_usuario";
+            $sql = "SELECT U.nome,P.titulo,P.curtidas,P.quantidade_comentarios,P.data_postagem from usuario_adm as U inner join postagem as P on U.id_usuario = P.fk_id_usuario";
             $stmt = $this->con->prepare($sql);
             $stmt->execute();
             $usuario_postagens = $stmt->fetchAll(PDO::FETCH_ASSOC);

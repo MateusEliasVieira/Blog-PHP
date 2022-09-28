@@ -27,8 +27,10 @@
                     <h6>Mateus Elias Vieira</h6>
                 </div>
                 <ul>
+                    <li class="li-titulo">Administrador</li>
+                    <li><a class="link-opcao" href="http://localhost/blog/post/administrador">Informações</a></li>
                     <li class="li-titulo">Postagem</li>
-                    <li><a class="link-opcao" href="http://localhost/blog/post/admin">Nova postagem</a></li>
+                    <li><a class="link-opcao" href="http://localhost/blog/post/novopost">Nova postagem</a></li>
                     <li><a class="link-opcao" href="http://localhost/blog/post/meusposts">Minhas postagens</a></li>
                     <li class="li-titulo">Usuários</li>
                     <li><a class="link-opcao" href="#">Adicionar usuário</a></li>

@@ -73,12 +73,21 @@ class PostController extends Controller{
     }
 
     // Métodos que só podem ser acessados se estiver logado como adm
-    public function admin(){
+
+    public function administrador(){
+        // SELECT count(id_postagem) as quantidade from postagem
+        // quantidade de Categorias
+        // quantidade de post
+         
+        $this->carregarTemplate("administrador",array());
+    }
+
+    public function novopost(){
         session_start();
         if((isset($_SESSION['token']) and !empty($_SESSION['token'])) and (isset($_SESSION['id_usuario']) and !empty($_SESSION['id_usuario']))){
             $postModel = new PostModel();
             $categorias = $postModel->listarCategorias();
-            $this->carregarTemplate("administrador",array($categorias,""));
+            $this->carregarTemplate("novopost",array($categorias,""));
         }else{
             $this->index();
         }
@@ -108,13 +117,13 @@ class PostController extends Controller{
                 $resultado = $postModel->cadastrar($postEntidade);
                 $categorias = $postModel->listarCategorias();
     
-                $this->carregarTemplate("administrador",array($categorias,$resultado));
+                $this->carregarTemplate("novopost",array($categorias,$resultado));
                 
             }else{
                 $aviso = "Por favor, preencha todos os campos!";
                 $postModel = new PostModel();
                 $categorias = $postModel->listarCategorias();
-                $this->carregarTemplate("administrador",array($categorias,$aviso));
+                $this->carregarTemplate("novopost",array($categorias,$aviso));
             }
         }else{
             $this->index();

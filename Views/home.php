@@ -30,16 +30,15 @@
                                 $data_formatada = $data[2]."/".$data[1]."/".$data[0];
                                 $horario_formatado = $horario[0].":".$horario[1];
                 
-                                echo "Postado em ".$data_formatada." às ".$horario_formatado;
+                                // echo "Postado em ".$data_formatada." às ".$horario_formatado." <b>|</b> Autor: ".$usuario_postagem['nome'];
                             ?>
+                            <span><?php echo "Postado em ".$data_formatada." às ".$horario_formatado; ?></span>
+                            <span><?php echo "[ Autor: ".$usuario_postagem['nome']." ]"; ?></span>
                         </p>
                     </div>
 
                     <div class="box-conteudo-post">
                         <a class="link-post title" <?php echo 'href="/blog/post/exibir/'.str_replace(" ","-",$usuario_postagem['titulo']).'"'; ?>> <?php echo $usuario_postagem['titulo']; ?> </a>
-                        <div class="content-post"> 
-                            <?php echo html_entity_decode($usuario_postagem['conteudo']); ?>
-                        </div>
                     </div>
 
                     <div class="box-button">
@@ -116,7 +115,7 @@
                 <div class="box-categoria">
                     <h4 class="title-categoria-post"> 
                         <a class="link-title-categoria-post" href="/blog/post/categoria/<?php echo $categoria['nome_categoria']; ?>">
-                            <?php echo $categoria['nome_categoria'];?>
+                            <?php echo $categoria['nome_categoria']. " - ".$categoria['quantidade_postagens'];?>
                         </a>
                     </h4>
                 </div>
