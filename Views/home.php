@@ -66,14 +66,14 @@
     <div id="box-right"> 
 
         <!-- Card de Pesquisa -->            
-        <div id="search-home">  
+        <div id="search-home" title="Se inscreva para receber os conteúdos diário da nossa NewsLetter">  
             <div class="box-chapeu">
-                <h3>Pesquisar</h3>
+                <h3>Inscreva-se</h3>
             </div>
             <div id="box-inputs">
-                <form action="home/busca" method="get">
-                    <input type="text" class="form-control" placeholder="Título">
-                    <input type="submit" value="Pesquisar" class="btn btn-dark">
+                <form action="/blog/inscrito/inscrever" method="post">
+                    <input type="email" class="form-control" placeholder="Deixe seu email" required="required" title="Escolha seu melhor email">
+                    <input type="submit" value="inscrever-me" class="btn btn-dark">
                 </form>
             </div>
         </div>

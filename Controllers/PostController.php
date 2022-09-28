@@ -75,11 +75,12 @@ class PostController extends Controller{
     // Métodos que só podem ser acessados se estiver logado como adm
 
     public function administrador(){
-        // SELECT count(id_postagem) as quantidade from postagem
-        // quantidade de Categorias
-        // quantidade de post
+        $postModel = new PostModel();
+        $qtd_usuario = $postModel->qtd_usuario();
+        $qtd_categoria = $postModel->qtd_categoria();
+        $qtd_postagem = $postModel->qtd_postagem();
          
-        $this->carregarTemplate("administrador",array());
+        $this->carregarTemplate("administrador",array($qtd_usuario,$qtd_categoria,$qtd_postagem));
     }
 
     public function novopost(){

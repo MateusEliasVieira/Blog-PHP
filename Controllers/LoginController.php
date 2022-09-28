@@ -24,9 +24,8 @@ class LoginController extends Controller{
                 if(isset($this->usuario) and !empty($this->usuario)){
                     $_SESSION['token'] = $this->usuario->getToken();
                     $_SESSION['id_usuario'] = $this->usuario->getIdUsuario();
-                    $postModel = new PostModel();
-                    $categorias = $postModel->listarCategorias();
-                    $this->carregarTemplate("administrador",array($categorias,""));
+                    $postController = new PostController();
+                    $postController->administrador();
                 }else if($this->usuario == false){
                     // Usuario não encontrado
                     $erro['erro_login'] = "Email ou senha inválidos!";

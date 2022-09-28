@@ -12,59 +12,6 @@ class PostModel{
         $this->con = Conexao::getConnection();
     }
 
-    // Realiza upload de imagem
-    private function uploadImagem(){
-
-        if(isset($_FILES['imagem']) and !empty($_FILES['imagem'])){
-            
-            $caminho_upload_imagem = "midia/uploads";
-            $formatos_permitidos = array("jpg", "jpeg", "png");
-            $tamanho_imagem_permitido = 26214400;
-
-            $nome_imagem = $_FILES['imagem']['name'];
-            $formato_imagem = explode(".",$nome_imagem)[1];
-            $tamanho_imagem = $_FILES['imagem']['size'];
-
-            $upload = $caminho_upload_imagem."/".$nome_imagem;
-
-            if(is_dir($caminho_upload_imagem)){
-                // É um diretório
-
-                if(in_array($formato_imagem,$formatos_permitidos)){
-                    // Formato permitido
-                    if($tamanho_imagem < $tamanho_imagem_permitido){
-                        // Tamanho OK
-                        $resultado = move_uploaded_file($_FILES['imagem']['tmp_name'],$upload);
-                        if($resultado){
-                            // Deu certo para fazer upload
-                            // unset($_FILES['imagem']);
-                            return $upload;
-                        }else{
-                            // Deu erro para fazer upload
-                            return "";
-                        }
-    
-                    }else{
-                        // Muito grande a imagem
-                        $this->erro_upload['erro_tamanho'] = "Tamanho da imagem é muito grande! Máximo(25Mb)";
-                        return "";
-                    }
-                }else{
-                    // Formato não permitido
-                    $this->erro_upload['erro_formato'] = "Formato de arquivo inválido! Permitido apenas (jpg, jpeg e png).";
-                    return "";
-                }
-            }else{
-                // Não existe o diretório
-                $this->erro_upload['erro_diretorio'] = "Não existe o caminho para fazer o upload!";
-                return "";
-            }
-        }else{
-            return "";
-        }
-
-    }
-
     // Cadastra uma nova postagem
     public function cadastrar(PostEntidade $post){   
         $titulo = $post->getTitulo();
@@ -170,10 +117,46 @@ class PostModel{
         }
     }
 
+    public function qtd_usuario(){
+        try{
+            $sql = "SELECT COUNT(id_usuario) AS qtd_usuario FROM usuario_adm";
+            $stmt = $this->con->prepare($sql);
+            $stmt->execute();
+            extract($stmt->fetch(PDO::FETCH_ASSOC));
+            return $qtd_usuario;
+        }catch(Exception $e){
+            die("Erro ao buscar quantidade de usuário na base de dados!");
+        }
+    }
+
+    public function qtd_categoria(){
+        try{
+            $sql = "SELECT COUNT(id_categoria) AS qtd_categoria FROM categoria";
+            $stmt = $this->con->prepare($sql);
+            $stmt->execute();
+            extract($stmt->fetch(PDO::FETCH_ASSOC));
+            return $qtd_categoria;
+        }catch(Exception $e){
+            die("Erro ao buscar quantidade de categoria na base de dados!");
+        }
+    }
+
+    public function qtd_postagem(){
+        try{
+            $sql = "SELECT SUM(quantidade_postagens) AS qtd_postagem FROM categoria";
+            $stmt = $this->con->prepare($sql);
+            $stmt->execute();
+            extract($stmt->fetch(PDO::FETCH_ASSOC));
+            return $qtd_postagem;
+        }catch(Exception $e){
+            die("Erro ao buscar quantidade de postagem na base de dados!");
+        }
+    }
+
     // Lista as postagens do usuário que esta ativo na sessão
     public function meusposts($id_usuario){
         try{
-            $sql = "SELECT P.id_postagem, P.titulo, P.conteudo , P.curtidas, P.quantidade_comentarios, P.data_postagem FROM postagem as P inner join usuario_adm as U on U.id_usuario = P.fk_id_usuario WHERE U.id_usuario = :id_usuario";
+            $sql = "SELECT P.id_postagem, P.titulo, P.conteudo , P.curtidas, P.quantidade_comentarios, P.data_postagem FROM postagem as P inner join usuario_adm as U on U.id_usuario = P.fk_id_usuario WHERE U.id_usuario = :id_usuario ORDER BY P.data_postagem DESC";
             $stmt = $this->con->prepare($sql);
             $stmt->bindValue(':id_usuario',$id_usuario);
             $stmt->execute();
@@ -187,7 +170,7 @@ class PostModel{
     // Lista todos so usuários e suas postagens 
     public function listarUsuarioPostagens(){
         try{
-            $sql = "SELECT U.nome,P.titulo,P.curtidas,P.quantidade_comentarios,P.data_postagem from usuario_adm as U inner join postagem as P on U.id_usuario = P.fk_id_usuario";
+            $sql = "SELECT U.nome,P.titulo,P.curtidas,P.quantidade_comentarios,P.data_postagem from usuario_adm as U inner join postagem as P on U.id_usuario = P.fk_id_usuario ORDER BY P.data_postagem DESC";
             $stmt = $this->con->prepare($sql);
             $stmt->execute();
             $usuario_postagens = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -205,7 +188,8 @@ class PostModel{
             ON U.id_usuario = P.fk_id_usuario 
             INNER JOIN categoria AS C 
             ON P.fk_id_categoria = C.id_categoria 
-            WHERE C.nome_categoria = :categoria";
+            WHERE C.nome_categoria = :categoria
+            ORDER BY P.data_postagem DESC";
 
             $stmt = $this->con->prepare($sql);
             $stmt->bindValue(":categoria",$categoria);
