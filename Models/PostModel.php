@@ -12,6 +12,59 @@ class PostModel{
         $this->con = Conexao::getConnection();
     }
 
+    // Realiza upload de imagem
+    private function uploadImagem(){
+
+        if(isset($_FILES['arquivo']) and !empty($_FILES['arquivo'])){
+            
+            $caminho_upload_imagem = "midia/uploads";
+            $formatos_permitidos = array("jpg", "jpeg", "png");
+            $tamanho_imagem_permitido = 26214400;
+
+            $nome_imagem = $_FILES['arquivo']['name'];
+            $formato_imagem = explode(".",$nome_imagem)[1];
+            $tamanho_imagem = $_FILES['arquivo']['size'];
+
+            $upload = $caminho_upload_imagem."/".$nome_imagem;
+
+            if(is_dir($caminho_upload_imagem)){
+                // É um diretório
+
+                if(in_array($formato_imagem,$formatos_permitidos)){
+                    // Formato permitido
+                    if($tamanho_imagem < $tamanho_imagem_permitido){
+                        // Tamanho OK
+                        $resultado = move_uploaded_file($_FILES['arquivo']['tmp_name'],$upload);
+                        if($resultado){
+                            // Deu certo para fazer upload
+                            // unset($_FILES['imagem']);
+                            return $upload;
+                        }else{
+                            // Deu erro para fazer upload
+                            return "";
+                        }
+    
+                    }else{
+                        // Muito grande a imagem
+                        $this->erro_upload['erro_tamanho'] = "Tamanho da imagem é muito grande! Máximo(25Mb)";
+                        return "";
+                    }
+                }else{
+                    // Formato não permitido
+                    $this->erro_upload['erro_formato'] = "Formato de arquivo inválido! Permitido apenas (jpg, jpeg e png).";
+                    return "";
+                }
+            }else{
+                // Não existe o diretório
+                $this->erro_upload['erro_diretorio'] = "Não existe o caminho para fazer o upload!";
+                return "";
+            }
+        }else{
+            return "";
+        }
+
+    }
+
     // Cadastra uma nova postagem
     public function cadastrar(PostEntidade $post){   
         $titulo = $post->getTitulo();
@@ -131,12 +184,27 @@ class PostModel{
 
     // Terminar aqui
     public function atualizarUsuario(UsuarioEntidade $usuarioEntidade){
-        if(isset($_FILES['arquivo']) and !empty($_FILES['arquivo'])){
-            $caminho_imagem = "";
-        }
-        try{
-            $sql = "INSERT INTO usuario_adm(nome,email,whatsapp,instagram,facebook,twitter,youtube,sobre,senha,caminho_imagem) VALUES(':nome,:email,:whatsapp,:instagram,:facebook,:twitter,:youtube,:sobre,:senha,:caminho_imagem')";
 
+        $caminho_imagem = $this->uploadImagem();
+        $usuarioEntidade->setCaminhoImagem($caminho_imagem);
+        
+        try{
+            $sql = "INSERT INTO usuario_adm(nome,email,whatsapp,instagram,facebook,twitter,youtube,sobre,senha,caminho_imagem) VALUES(':nome,:email,:whatsapp,:instagram,:facebook,:twitter,:youtube,:sobre,:senha,:caminho_imagem')"; 
+            
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindParam(':nome',$usuarioEntidade->getNome());
+            $stmt->bindParam(':email',$usuarioEntidade->getEmail());
+            $stmt->bindParam(':whatsapp',$usuarioEntidade->getWhatsapp());
+            $stmt->bindParam(':instagram',$usuarioEntidade->getInstagram());
+            $stmt->bindParam(':facebook',$usuarioEntidade->getFacebook());
+            $stmt->bindParam(':twitter',$usuarioEntidade->getTwitter());
+            $stmt->bindParam(':youtube',$usuarioEntidade->getYoutube());
+            $stmt->bindParam(':sobre',$usuarioEntidade->getSobre()); 
+            $senha_criptografada = sha1($usuarioEntidade->getSenha());
+            $stmt->bindParam(':senha',$senha_criptografada); 
+            $stmt->bindParam(':caminho_imagem',$usuarioEntidade->getCaminhoImagem());
+            
+            $stmt->execute(); 
         }catch(Exception $e){
             die('Erro ao atualizar dados do usuário administrador!');
         }
