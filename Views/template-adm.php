@@ -39,7 +39,7 @@
                     <li><a class="link-opcao" href="#">Nova notícia</a></li>
                     <li><a class="link-opcao" href="#">Inscritos</a></li>
                     <li class="li-titulo">Perfil</li>
-                    <li><a class="link-opcao" href="#">Configurações</a></li>
+                    <li><a class="link-opcao" href="http://localhost/blog/post/configuracoes">Configurações</a></li>
 
                 </ul>
             </section>

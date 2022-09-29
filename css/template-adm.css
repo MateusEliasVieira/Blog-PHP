@@ -88,6 +88,10 @@ nav > ul > li{
     list-style-type: none;
     font-size: 20px;
     color: #141414;
+    display: flex !important;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 /* nav > ul > li > span{
     color:white;

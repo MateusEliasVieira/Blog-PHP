@@ -129,6 +129,19 @@ class PostModel{
         }
     }
 
+    // Terminar aqui
+    public function atualizarUsuario(UsuarioEntidade $usuarioEntidade){
+        if(isset($_FILES['arquivo']) and !empty($_FILES['arquivo'])){
+            $caminho_imagem = "";
+        }
+        try{
+            $sql = "INSERT INTO usuario_adm(nome,email,whatsapp,instagram,facebook,twitter,youtube,sobre,senha,caminho_imagem) VALUES(':nome,:email,:whatsapp,:instagram,:facebook,:twitter,:youtube,:sobre,:senha,:caminho_imagem')";
+
+        }catch(Exception $e){
+            die('Erro ao atualizar dados do usuário administrador!');
+        }
+    }
+
     public function qtd_categoria(){
         try{
             $sql = "SELECT COUNT(id_categoria) AS qtd_categoria FROM categoria";

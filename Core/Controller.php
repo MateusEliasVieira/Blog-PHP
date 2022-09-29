@@ -9,7 +9,7 @@ class Controller{
     }
 
     public function carregarTemplate($nome_view, $dados){
-        if($nome_view == "administrador" || $nome_view == "novopost" ||$nome_view == "editarpost"  || $nome_view == "meusposts"){
+        if($nome_view == "administrador" || $nome_view == "novopost" ||$nome_view == "editarpost"  || $nome_view == "meusposts" || $nome_view == "configuracoes"){
             require "Views/template-adm.php";
         }else{
             require "Views/template.php";

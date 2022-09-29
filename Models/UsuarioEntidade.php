@@ -5,6 +5,12 @@ class UsuarioEntidade{
     private int $id_usuario;
     private string $nome;
     private string $email;
+    private string $whatsapp;
+    private string $instagram;
+    private string $facebook;
+    private string $twitter;
+    private string $youtube;
+    private string $sobre;
     private string $senha;
     private string $token;
     private string $caminho_imagem;
@@ -31,6 +37,48 @@ class UsuarioEntidade{
 
     public function setEmail(string $email){
         $this->email = $email;
+    }
+
+    public function setWhatsapp(string $whatsapp){
+        $this->whatsapp = $whatsapp;
+    }
+    public function getWhatsapp(){
+        return $this->whatsapp;
+    }
+
+    public function setInstagram(string $instagram){
+        $this->instagram = $instagram;
+    }
+    public function getInstagram(){
+        return $this->instagram;
+    }
+
+    public function setFacebook(string $facebook){
+        $this->facebook = $facebook;
+    }
+    public function getFacebook(){
+        return $this->facebook;
+    }
+
+    public function setTwitter(string $twitter){
+        $this->twitter = $twitter;
+    }
+    public function getTwitter(){
+        return $this->twitter;
+    }
+
+    public function setYoutube(string $youtube){
+        $this->youtube = $youtube;
+    }
+    public function getYoutube(){
+        return $this->youtube;
+    }
+
+    public function setSobre(string $sobre){
+        $this->sobre = $sobre;
+    }
+    public function getSobre(){
+        return $this->sobre;
     }
 
     public function getSenha(){

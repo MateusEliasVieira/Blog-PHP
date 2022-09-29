@@ -75,12 +75,131 @@ class PostController extends Controller{
     // Métodos que só podem ser acessados se estiver logado como adm
 
     public function administrador(){
-        $postModel = new PostModel();
-        $qtd_usuario = $postModel->qtd_usuario();
-        $qtd_categoria = $postModel->qtd_categoria();
-        $qtd_postagem = $postModel->qtd_postagem();
-         
-        $this->carregarTemplate("administrador",array($qtd_usuario,$qtd_categoria,$qtd_postagem));
+        session_start();
+        if((isset($_SESSION['token']) and !empty($_SESSION['token'])) and (isset($_SESSION['id_usuario']) and !empty($_SESSION['id_usuario']))){
+            $postModel = new PostModel();
+            $qtd_usuario = $postModel->qtd_usuario();
+            $qtd_categoria = $postModel->qtd_categoria();
+            $qtd_postagem = $postModel->qtd_postagem();    
+            $this->carregarTemplate("administrador",array($qtd_usuario,$qtd_categoria,$qtd_postagem));
+        }else{
+            $this->index();
+        }
+    }
+
+    public function usuario(){
+        session_start();
+        
+        $erros = array();
+
+        if((isset($_SESSION['token']) and !empty($_SESSION['token'])) and (isset($_SESSION['id_usuario']) and !empty($_SESSION['id_usuario']))){
+           
+            // Verificar se existem os campos vindos do formulário
+            if(isset($_POST['nome']) and isset($_POST['email']) and isset($_POST['whatsapp']) and isset($_POST['instagram']) and isset($_POST['twitter']) and isset($_POST['facebook']) and isset($_POST['youtube']) and isset($_POST['senha']) and isset($_POST['repete_senha']) and isset($_POST['sobre'])){
+                
+                // Obtendo os valores e limpando
+                $nome = $_POST['nome'];
+                $email = $_POST['email'];
+                $whatsapp = $_POST['whatsapp'];
+                $instagram = $_POST['instagram'];
+                $twitter = $_POST['twitter'];
+                $facebook = $_POST['facebook'];
+                $youtube = $_POST['youtube'];
+                $sobre = filter_input(INPUT_POST,'sobre',FILTER_SANITIZE_SPECIAL_CHARS);
+                $senha = $_POST['senha'];
+                $repete_senha = $_POST['repete_senha'];
+                
+                // Campos obrigatórios
+                if(!empty($_POST['nome']) and !empty($_POST['email']) and !empty($_POST['senha']) and !empty($_POST['repete_senha'])){
+
+                    // Validar se os valores são aceitos
+                    if (!preg_match("/^[a-zA-Z-' ]*$/",$_POST['nome'])) {
+                        $erros['erro_nome'] = "Informe apenas letras e espaço em branco!";
+                    }
+                    if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+                        $erros['erro_email'] = "Formato de email inválido!";
+                    }
+                    if($_POST['senha'] != $_POST['repete_senha']){
+                        $erros['erro_senha'] = "As senhas não batem!";
+                    }else{
+                        // Verifica o tamanho da senha
+                        if(!strlen($_POST['senha']) >= 6){
+                            $erros['erro_senha'] = "A senha deve ter no mínimo 6 caracteres!";
+                        }
+                    }
+
+
+                    // Verificar os outros campos que não são obrigatórios
+                    if(!empty($_POST['whatsapp'])){
+                        if(!strlen($_POST['whatsapp']) == 11){
+                            $erros['erro_whatsapp'] = "Whatsapp inválido!";
+                        }
+                    }
+                    if(!empty($_POST['instagram'])){
+                        if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$_POST['instagram'])) {
+                            $erros['erro_instagram'] = "Link de url do instagram inválida!";
+                        }
+                    }
+                    if(!empty($_POST['twitter'])){
+                        if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$_POST['twitter'])) {
+                            $erros['erro_twitter'] = "Link de url do twitter inválida!";
+                        }
+                    }
+                    if(!empty($_POST['facebook'])){
+                        if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$_POST['facebook'])) {
+                            $erros['erro_facebook'] = "Link de url do facebook inválida!";
+                        }
+                    }
+                    if(!empty($_POST['youtube'])){
+                        if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$_POST['youtube'])) {
+                            $erros['erro_youtube'] = "Link de url do youtube inválida!";
+                        }
+                    }
+      
+                
+                }else{
+                    // Emitir mensagem que há campos obrigatorios que n foram preenchidos
+                    $erros['erro_campos'] = 'Há campos obrigatórios que não foram preenchidos!';
+                }
+
+            }else{
+                // Houve um problema ao enviar o formulário
+                $erros['erro_formulario'] = 'Houve um problema ao enviar o formulário!';
+            }
+
+            if(empty($erros)){
+                // Esta vazio, então não tem erros
+                $usuarioEntidade = new UsuarioEntidade();
+                $usuarioEntidade->setNome($_POST['nome']);
+                $usuarioEntidade->setEmail($_POST['email']);
+                $usuarioEntidade->setNome($_POST['nome']);
+                $usuarioEntidade->setWhatsapp($_POST['whatsapp']);
+                $usuarioEntidade->setInstagram($_POST['instagram']);
+                $usuarioEntidade->setFacebook($_POST['facebook']);
+                $usuarioEntidade->setTwitter($_POST['twitter']);
+                $usuarioEntidade->setYoutube($_POST['youtube']);
+                $usuarioEntidade->setSobre($_POST['sobre']);
+                $usuarioEntidade->setSenha($_POST['senha']);
+                
+                $postModel = new PostModel();
+
+            }else{
+                // Há erros
+            }
+
+        }else{
+            // não existe sessão
+            $this->index();
+        }
+    }
+
+    public function configuracoes(){
+        session_start();
+        if((isset($_SESSION['token']) and !empty($_SESSION['token'])) and (isset($_SESSION['id_usuario']) and !empty($_SESSION['id_usuario']))){
+            $this->carregarTemplate("configuracoes",array());
+        }else{
+            $this->index();
+        }
     }
 
     public function novopost(){
