@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 class LoginController extends Controller{
 
     private $usuario;
@@ -9,7 +11,6 @@ class LoginController extends Controller{
     }
 
     public function logar(){
-        session_start();
        
         if(!isset($_SESSION['token']) and !isset($_SESSION['id_usuario'])){
 
@@ -24,8 +25,8 @@ class LoginController extends Controller{
                 if(isset($this->usuario) and !empty($this->usuario)){
                     $_SESSION['token'] = $this->usuario->getToken();
                     $_SESSION['id_usuario'] = $this->usuario->getIdUsuario();
-                    $postController = new PostController();
-                    $postController->administrador();
+                    $usuarioController = new UsuarioController();
+                    $usuarioController->administrador();
                 }else if($this->usuario == false){
                     // Usuario não encontrado
                     $erro['erro_login'] = "Email ou senha inválidos!";
@@ -40,8 +41,8 @@ class LoginController extends Controller{
 
         }else{
             // Já existe sessão
-            $postModel = new PostModel();
-            $categorias = $postModel->listarCategorias();
+            $categoriaModel = new CategoriaModel();
+            $categorias = $categoriaModel->listarCategorias();
             $this->carregarTemplate("administrador",array($categorias,""));
         }
     }
