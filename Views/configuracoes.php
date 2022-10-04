@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="../dist/plugins/colors/ui/trumbowyg.colors.min.css">
 
 <section id="section-config">
-    <form action="/blog/post/usuario" method="post" enctype="multipart/form-data">
+    <form action="/blog/usuario/usuario" method="post" enctype="multipart/form-data">
         <h3>Meus dados</h3>
         <div class="input-group">
             <input name="nome" class="form-control form-control-lg" type="text" placeholder="Nome (obrigatório)" aria-label=".form-control-lg example">

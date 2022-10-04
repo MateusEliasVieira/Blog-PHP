@@ -1,6 +1,6 @@
 <?php 
 
-require_once "Conexao.php";
+require_once "lib/database/Conexao.php";
 
 class PostModel{
 
@@ -10,59 +10,6 @@ class PostModel{
     public function __construct(){
         $this->erro_upload = array();
         $this->con = Conexao::getConnection();
-    }
-
-    // Realiza upload de imagem
-    private function uploadImagem(){
-
-        if(isset($_FILES['arquivo']) and !empty($_FILES['arquivo'])){
-            
-            $caminho_upload_imagem = "midia/uploads";
-            $formatos_permitidos = array("jpg", "jpeg", "png");
-            $tamanho_imagem_permitido = 26214400;
-
-            $nome_imagem = $_FILES['arquivo']['name'];
-            $formato_imagem = explode(".",$nome_imagem)[1];
-            $tamanho_imagem = $_FILES['arquivo']['size'];
-
-            $upload = $caminho_upload_imagem."/".$nome_imagem;
-
-            if(is_dir($caminho_upload_imagem)){
-                // É um diretório
-
-                if(in_array($formato_imagem,$formatos_permitidos)){
-                    // Formato permitido
-                    if($tamanho_imagem < $tamanho_imagem_permitido){
-                        // Tamanho OK
-                        $resultado = move_uploaded_file($_FILES['arquivo']['tmp_name'],$upload);
-                        if($resultado){
-                            // Deu certo para fazer upload
-                            // unset($_FILES['imagem']);
-                            return $upload;
-                        }else{
-                            // Deu erro para fazer upload
-                            return "";
-                        }
-    
-                    }else{
-                        // Muito grande a imagem
-                        $this->erro_upload['erro_tamanho'] = "Tamanho da imagem é muito grande! Máximo(25Mb)";
-                        return "";
-                    }
-                }else{
-                    // Formato não permitido
-                    $this->erro_upload['erro_formato'] = "Formato de arquivo inválido! Permitido apenas (jpg, jpeg e png).";
-                    return "";
-                }
-            }else{
-                // Não existe o diretório
-                $this->erro_upload['erro_diretorio'] = "Não existe o caminho para fazer o upload!";
-                return "";
-            }
-        }else{
-            return "";
-        }
-
     }
 
     // Cadastra uma nova postagem
@@ -170,58 +117,8 @@ class PostModel{
         }
     }
 
-    public function qtd_usuario(){
-        try{
-            $sql = "SELECT COUNT(id_usuario) AS qtd_usuario FROM usuario_adm";
-            $stmt = $this->con->prepare($sql);
-            $stmt->execute();
-            extract($stmt->fetch(PDO::FETCH_ASSOC));
-            return $qtd_usuario;
-        }catch(Exception $e){
-            die("Erro ao buscar quantidade de usuário na base de dados!");
-        }
-    }
 
-    // Terminar aqui
-    public function atualizarUsuario(UsuarioEntidade $usuarioEntidade){
-
-        $caminho_imagem = $this->uploadImagem();
-        $usuarioEntidade->setCaminhoImagem($caminho_imagem);
-        
-        try{
-            $sql = "INSERT INTO usuario_adm(nome,email,whatsapp,instagram,facebook,twitter,youtube,sobre,senha,caminho_imagem) VALUES(':nome,:email,:whatsapp,:instagram,:facebook,:twitter,:youtube,:sobre,:senha,:caminho_imagem')"; 
-            
-            $stmt = $this->con->prepare($sql);
-            $stmt->bindParam(':nome',$usuarioEntidade->getNome());
-            $stmt->bindParam(':email',$usuarioEntidade->getEmail());
-            $stmt->bindParam(':whatsapp',$usuarioEntidade->getWhatsapp());
-            $stmt->bindParam(':instagram',$usuarioEntidade->getInstagram());
-            $stmt->bindParam(':facebook',$usuarioEntidade->getFacebook());
-            $stmt->bindParam(':twitter',$usuarioEntidade->getTwitter());
-            $stmt->bindParam(':youtube',$usuarioEntidade->getYoutube());
-            $stmt->bindParam(':sobre',$usuarioEntidade->getSobre()); 
-            $senha_criptografada = sha1($usuarioEntidade->getSenha());
-            $stmt->bindParam(':senha',$senha_criptografada); 
-            $stmt->bindParam(':caminho_imagem',$usuarioEntidade->getCaminhoImagem());
-            
-            $stmt->execute(); 
-        }catch(Exception $e){
-            die('Erro ao atualizar dados do usuário administrador!');
-        }
-    }
-
-    public function qtd_categoria(){
-        try{
-            $sql = "SELECT COUNT(id_categoria) AS qtd_categoria FROM categoria";
-            $stmt = $this->con->prepare($sql);
-            $stmt->execute();
-            extract($stmt->fetch(PDO::FETCH_ASSOC));
-            return $qtd_categoria;
-        }catch(Exception $e){
-            die("Erro ao buscar quantidade de categoria na base de dados!");
-        }
-    }
-
+    // Mostra a quantidade de postagens existentes
     public function qtd_postagem(){
         try{
             $sql = "SELECT SUM(quantidade_postagens) AS qtd_postagem FROM categoria";
@@ -248,7 +145,7 @@ class PostModel{
         }
     }
 
-    // Lista todos so usuários e suas postagens 
+    // Lista todos os usuários e suas postagens 
     public function listarUsuarioPostagens(){
         try{
             $sql = "SELECT U.nome,P.titulo,P.curtidas,P.quantidade_comentarios,P.data_postagem from usuario_adm as U inner join postagem as P on U.id_usuario = P.fk_id_usuario ORDER BY P.data_postagem DESC";
@@ -261,6 +158,7 @@ class PostModel{
         }
     }
     
+    // lista usuarios e suas postagens pela categoria da postagem
     public function listarUsuarioPostagensDaCategoria(string $categoria){
         try{
             $sql = "SELECT U.nome,P.titulo,P.conteudo,P.curtidas,P.quantidade_comentarios,P.data_postagem 
@@ -283,18 +181,7 @@ class PostModel{
         }
     }
 
-    // Busca todas as categorias
-    public function listarCategorias(){
-        try{
-            $sql = "SELECT * FROM categoria";
-            $stmt = $this->con->prepare($sql);
-            $stmt->execute();
-            $post = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return $post;
-        }catch(Exception $e){
-            die("Erro ao buscar categorias na base de dados!");
-        }
-    }
+  
 
     // Busca as postagens em destaque, isto é, as três primeiras mais recentes
     public function listarDestaques(){
@@ -311,7 +198,6 @@ class PostModel{
 
     // Busca uma postagem e seus comentários
     public function buscarPostComentarios(string $titulo){
-        // echo "<h1 style='position:fixed; z-index:20;'>".$titulo."</h1>";
         try{
             $sql = "SELECT * FROM postagem as p inner join comentario as c on p.id_postagem = c.fk_id_postagem WHERE p.titulo = :titulo";
             $stmt = $this->con->prepare($sql);
@@ -394,5 +280,6 @@ class PostModel{
             die("Erro ao comentar sobre o post");
         }
     }
+
 
 }

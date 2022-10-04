@@ -2,14 +2,17 @@
 
 spl_autoload_register(function($nome_arquivo) {
 
-    if(file_exists('Controllers/'.$nome_arquivo.'.php')){
-        require 'Controllers/'.$nome_arquivo.'.php';
+    if(file_exists('controllers/'.$nome_arquivo.'.php')){
+        require 'controllers/'.$nome_arquivo.'.php';
     }
-    if(file_exists('Models/'.$nome_arquivo.'.php')){
-        require 'Models/'.$nome_arquivo.'.php';
+    if(file_exists('models/'.$nome_arquivo.'.php')){
+        require 'models/'.$nome_arquivo.'.php';
     }
-    if(file_exists('Core/'.$nome_arquivo.'.php')){
-        require 'Core/'.$nome_arquivo.'.php';
+    if(file_exists('models/entity/'.$nome_arquivo.'.php')){
+        require 'models/entity/'.$nome_arquivo.'.php';
+    }
+    if(file_exists('core/'.$nome_arquivo.'.php')){
+        require 'core/'.$nome_arquivo.'.php';
     }
 
 });

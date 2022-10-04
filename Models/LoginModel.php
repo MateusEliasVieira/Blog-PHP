@@ -1,5 +1,7 @@
 <?php
 
+require_once "lib/database/Conexao.php";
+
 class LoginModel{
 
     private $con;

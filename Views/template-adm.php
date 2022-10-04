@@ -28,10 +28,10 @@
                 </div>
                 <ul>
                     <li class="li-titulo">Administrador</li>
-                    <li><a class="link-opcao" href="http://localhost/blog/post/administrador">Informações</a></li>
+                    <li><a class="link-opcao" href="http://localhost/blog/usuario/administrador">Informações</a></li>
                     <li class="li-titulo">Postagem</li>
-                    <li><a class="link-opcao" href="http://localhost/blog/post/novopost">Nova postagem</a></li>
-                    <li><a class="link-opcao" href="http://localhost/blog/post/meusposts">Minhas postagens</a></li>
+                    <li><a class="link-opcao" href="http://localhost/blog/usuario/novopost">Nova postagem</a></li>
+                    <li><a class="link-opcao" href="http://localhost/blog/usuario/meusposts">Minhas postagens</a></li>
                     <li class="li-titulo">Usuários</li>
                     <li><a class="link-opcao" href="#">Adicionar usuário</a></li>
                     <li><a class="link-opcao" href="#">Listar usuários</a></li>
@@ -39,7 +39,7 @@
                     <li><a class="link-opcao" href="#">Nova notícia</a></li>
                     <li><a class="link-opcao" href="#">Inscritos</a></li>
                     <li class="li-titulo">Perfil</li>
-                    <li><a class="link-opcao" href="http://localhost/blog/post/configuracoes">Configurações</a></li>
+                    <li><a class="link-opcao" href="http://localhost/blog/usuario/configuracoes">Configurações</a></li>
 
                 </ul>
             </section>

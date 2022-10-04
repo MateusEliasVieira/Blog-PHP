@@ -114,7 +114,7 @@
             <?php foreach ($categorias as $categoria){?>
                 <div class="box-categoria">
                     <h4 class="title-categoria-post"> 
-                        <a class="link-title-categoria-post" href="/blog/post/categoria/<?php echo $categoria['nome_categoria']; ?>">
+                        <a class="link-title-categoria-post" href="/blog/categoria/categoria/<?php echo $categoria['nome_categoria']; ?>">
                             <?php echo $categoria['nome_categoria']. " - ".$categoria['quantidade_postagens'];?>
                         </a>
                     </h4>
