@@ -10,12 +10,18 @@ header{
 nav{
     width: 100%;
     height: 80px;
-    background-image: linear-gradient(to bottom,rgb(231, 233, 234), rgb(250, 250, 250));
+    background-color: #212329;
+    /* background-image: linear-gradient(to bottom,rgb(231, 233, 234), rgb(250, 250, 250)); */
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-    color: #141414;
+}
+#li-adm{
+    color: #4af0d7;
+}
+#sair-adm{
+    color: #4af0d7;
 }
 #dados-administrador{
     width: 100%;
@@ -32,6 +38,7 @@ nav{
 }
 #dados-administrador > h6{
     padding:10px;
+    color: #4af0d7;
 }
 #menu-administrativo > ul{
     margin: 0;
@@ -44,18 +51,19 @@ nav{
 #menu-administrativo > ul > .li-titulo{
     font-size:16px;
     padding:5px 10px;
+    color: rgb(202, 200, 200);
 }
 #menu-administrativo > ul > li > .link-opcao{
     display:block;
     padding:5px 0px 5px 20px;
     text-decoration: none;
-    color:#141414;
+    color: rgb(246, 241, 241);
 }
 #menu-administrativo > ul > li > .link-opcao:hover{
-    background-color:rgb(213, 210, 210);
+    background-color:#131315;
 }
 .li-titulo{
-    background-color:rgb(231, 227, 227);
+    background-color:#1d1e21;
 }
 #box-container-administrativo{
     width: 100%;
@@ -66,10 +74,12 @@ nav{
     align-items: flex-start;
 }
 #menu-administrativo{
-    width: 250px;
-    height: 100%;
+    min-width: 250px;
+    max-width: 300px;
+    height: 100vh;
     padding-bottom: 30px;
-    background-image: linear-gradient(to top,rgb(231, 233, 234), rgb(250, 250, 250));
+    background-color: #212329;
+    /* background-image: linear-gradient(to top,rgb(231, 233, 234), rgb(250, 250, 250)); */
 }
 nav > ul{
     width: 100%;

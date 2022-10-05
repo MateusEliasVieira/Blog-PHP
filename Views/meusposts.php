@@ -30,7 +30,7 @@
                         <td><?php echo $postagem['quantidade_comentarios']; ?></td>
                         <td><?php echo $postagem['data_postagem']; ?></td>
                         <td class="td-opcoes">
-                            <form action="http://localhost/blog/post/editar" method="post">
+                            <form action="http://localhost/blog/usuario/editar" method="post">
                                 <input type="hidden" name="id_postagem" value="<?php echo $postagem['id_postagem'];?>"/>
                                 <input class="btn btn-primary" type="submit" value="Editar">
                             </form>

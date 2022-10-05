@@ -18,17 +18,21 @@ class UsuarioController extends Controller{
     public function administrador(){
         
         if((isset($_SESSION['token']) and !empty($_SESSION['token'])) and (isset($_SESSION['id_usuario']) and !empty($_SESSION['id_usuario']))){
-            
+            // echo "<br>entrou no metodo administrador";
             $usuarioModel = new UsuarioModel();
             $postModel = new PostModel();
             $categoriaModel = new CategoriaModel();
 
             $qtd_usuario = $usuarioModel->qtd_usuario();
             $qtd_categoria = $categoriaModel->qtd_categoria();
-            $qtd_postagem = $postModel->qtd_postagem();    
+            $qtd_postagem = $postModel->qtd_postagem();
+            // echo "<br>Quantidade de usuario = ".$qtd_usuario;    
+            // echo "<br>Quantidade de postagens = ".$qtd_postagem;    
+            // echo "<br>Quantidade de categoria = ".$qtd_categoria;    
 
             $this->carregarTemplate("administrador",array($qtd_usuario,$qtd_categoria,$qtd_postagem));
         }else{
+            // echo "<br>NÃO entrou no metodo administrador";
             $this->index();
         }
     }
@@ -171,26 +175,14 @@ class UsuarioController extends Controller{
         if((isset($_SESSION['token']) and !empty($_SESSION['token'])) and (isset($_SESSION['id_usuario']) and !empty($_SESSION['id_usuario']))){
            
             // Verificar se existem os campos vindos do formulário
-            if(isset($_POST['nome']) and isset($_POST['email']) and isset($_POST['whatsapp']) and isset($_POST['instagram']) and isset($_POST['twitter']) and isset($_POST['facebook']) and isset($_POST['youtube']) and isset($_POST['senha']) and isset($_POST['repete_senha']) and isset($_POST['sobre'])){
-                
-                // Obtendo os valores e limpando
-                $nome = $_POST['nome'];
-                $email = $_POST['email'];
-                $whatsapp = $_POST['whatsapp'];
-                $instagram = $_POST['instagram'];
-                $twitter = $_POST['twitter'];
-                $facebook = $_POST['facebook'];
-                $youtube = $_POST['youtube'];
-                $sobre = filter_input(INPUT_POST,'sobre',FILTER_SANITIZE_SPECIAL_CHARS);
-                $senha = $_POST['senha'];
-                $repete_senha = $_POST['repete_senha'];
+            if(isset($_POST['submit_atualizar']) and isset($_POST['nome']) and isset($_POST['email']) and isset($_POST['whatsapp']) and isset($_POST['instagram']) and isset($_POST['twitter']) and isset($_POST['facebook']) and isset($_POST['youtube']) and isset($_POST['senha']) and isset($_POST['repete_senha']) and isset($_POST['sobre'])){
                 
                 // Campos obrigatórios
                 if(!empty($_POST['nome']) and !empty($_POST['email']) and !empty($_POST['senha']) and !empty($_POST['repete_senha'])){
 
                     // Validar se os valores são aceitos
                     if (!preg_match("/^[a-zA-Z-' ]*$/",$_POST['nome'])) {
-                        $erros['erro_nome'] = "Informe apenas letras e espaço em branco!";
+                        $erros['erro_nome'] = "Nome inválido, informe apenas letras e espaço em branco!";
                     }
                     if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
                         $erros['erro_email'] = "Formato de email inválido!";
@@ -207,8 +199,8 @@ class UsuarioController extends Controller{
 
                     // Verificar os outros campos que não são obrigatórios
                     if(!empty($_POST['whatsapp'])){
-                        if(!strlen($_POST['whatsapp']) == 11){
-                            $erros['erro_whatsapp'] = "Whatsapp inválido!";
+                        if(strlen($_POST['whatsapp']) < 11){
+                            $erros['erro_whatsapp'] = "Whatsapp inválido! Necessário ter 11 dígitos";
                         }
                     }
                     if(!empty($_POST['instagram'])){
@@ -240,7 +232,7 @@ class UsuarioController extends Controller{
 
             }else{
                 // Houve um problema ao enviar o formulário
-                $erros['erro_formulario'] = 'Houve um problema ao enviar o formulário!';
+                $erros['erro_formulario'] = 'Você não preencheu o formulário de atualização!';
             }
 
             if(empty($erros)){
@@ -248,7 +240,6 @@ class UsuarioController extends Controller{
                 $usuarioEntidade = new UsuarioEntidade();
                 $usuarioEntidade->setNome($_POST['nome']);
                 $usuarioEntidade->setEmail($_POST['email']);
-                $usuarioEntidade->setNome($_POST['nome']);
                 $usuarioEntidade->setWhatsapp($_POST['whatsapp']);
                 $usuarioEntidade->setInstagram($_POST['instagram']);
                 $usuarioEntidade->setFacebook($_POST['facebook']);
@@ -258,10 +249,12 @@ class UsuarioController extends Controller{
                 $usuarioEntidade->setSenha($_POST['senha']);
                 
                 $usuarioModel = new UsuarioModel();
-                $usuarioModel->atualizarDadosDoPerfil($usuarioEntidade);
+                $resultado = $usuarioModel->atualizarDadosDoPerfil($usuarioEntidade);
+                $this->carregarTemplate("configuracoes",$resultado);
 
             }else{
                 // Há erros
+                $this->carregarTemplate("configuracoes",$erros);
             }
 
         }else{

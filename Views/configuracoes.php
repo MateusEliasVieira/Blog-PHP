@@ -7,9 +7,65 @@
 <link rel="stylesheet" href="../dist/plugins/highlight/ui/trumbowyg.highlight.min.css">
 <link rel="stylesheet" href="../dist/plugins/colors/ui/trumbowyg.colors.min.css">
 
+
+<?php
+    $erros = (isset($dados) and is_array($dados) and !empty($dados)) ? $dados : null;
+    $resultado = (isset($dados) and is_bool($dados) and !empty($dados)) ? $dados : null;
+?>
+
 <section id="section-config">
     <form action="/blog/usuario/usuario" method="post" enctype="multipart/form-data">
+        <?php if($resultado != null and $resultado == true){?>
+            <div id="alerta-sucesso" class="alert alert-success" role="alert">
+                <?php echo "Seus dados foram atualizados com sucesso!";?> 
+            </div>
+            <script type="text/javascript">
+                    setTimeout(function(){
+                        document.getElementById("alerta-sucesso").style.display = "none";
+                    },5000);
+            </script>   
+        <?php }else if($resultado != null and $resultado == false){ ?>
+            <div id="alerta-erro" class="alert alert-danger" role="alert">
+                <?php echo "Não foi possível atualizar seus dados!";?>    
+            </div>
+            <script type="text/javascript">
+                    setTimeout(function(){
+                        document.getElementById("alerta-erro").style.display = "none";
+                    },5000);
+            </script>   
+        <?php } ?>
         <h3>Meus dados</h3>
+
+        <?php if($erros != null){?>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Visualizar erros
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Erro(s)</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <?php foreach($erros as $erro){?>
+                        <div id="alerta-erro" class="alert alert-danger" role="alert">
+                            <?php echo $erro; ?>    
+                        </div>
+                    <?php } ?>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Irei concertar</button>
+                </div>
+                </div>
+            </div>
+            </div>
+
+        <?php } ?>
+
         <div class="input-group">
             <input name="nome" class="form-control form-control-lg" type="text" placeholder="Nome (obrigatório)" aria-label=".form-control-lg example">
             <input name="email" class="form-control form-control-lg" type="email" placeholder="Email (obrigatório)" aria-label=".form-control-lg example">
@@ -32,6 +88,7 @@
         </textarea>
         <input type="submit" name="submit_atualizar" class="btn btn-dark" value="Atualizar">
     </form>
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="../dist/trumbowyg.min.js"></script>

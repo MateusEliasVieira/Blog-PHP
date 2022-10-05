@@ -16,8 +16,8 @@
 
 <section id="section-editar">
 
-    <form id="form-editar" method="post" action="http://localhost/blog/post/atualizar">
-         
+    <form id="form-editar" method="post" action="http://localhost/blog/usuario/atualizar">
+        <h3>Atualizando Postagem</h3>
         <!-- Caso exista algum erro para fazer a postagem, mostrará a mensagem de erro -->
          <?php if(isset($resposta) and !empty($resposta) and is_bool($resposta) and $resposta == true){ ?>
             <div id="alerta-sucesso" class="alert alert-info" role="alert">
@@ -57,7 +57,7 @@
             <option selected value="">Selecione a Categoria</option>
             <?php if(isset($categorias) and !empty($categorias)){ ?>
                 <?php  foreach($categorias as $categoria){?>
-                    <option value="<?php echo $categoria['id_categoria']; ?>">
+                    <option value="<?php echo $categoria['id_categoria']; ?>" <?php if($categoria['id_categoria'] == $post['fk_id_categoria']){ echo "selected='selected'";} ?>>
                         <?php echo $categoria['nome_categoria'];?>
                     </option>
                 <?php } ?>

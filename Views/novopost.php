@@ -14,8 +14,9 @@
 ?>
 
 <section id="section-novo-post">
+    
     <form id="form" method="post" action="http://localhost/blog/usuario/cadastrar">
-       
+        <h3>Nova Postagem</h3>
        <!-- Caso exista algum erro para fazer a postagem, mostrará a mensagem de erro -->
         <?php if(isset($resposta) and !empty($resposta) and is_bool($resposta) and $resposta == true){ ?>
             <div id="alerta-sucesso" class="alert alert-info" role="alert">

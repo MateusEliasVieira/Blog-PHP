@@ -102,8 +102,7 @@ class UsuarioModel{
 
     private function uploadImagem(){
 
-        if(isset($_FILES['arquivo']) and !empty($_FILES['arquivo'])){
-            
+        if(isset($_FILES['arquivo']) and !empty($_FILES['arquivo']['name'])){
             $caminho_upload_imagem = "midia/uploads";
             $formatos_permitidos = array("jpg", "jpeg", "png");
             $tamanho_imagem_permitido = 26214400;

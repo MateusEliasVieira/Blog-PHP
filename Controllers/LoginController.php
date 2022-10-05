@@ -25,8 +25,7 @@ class LoginController extends Controller{
                 if(isset($this->usuario) and !empty($this->usuario)){
                     $_SESSION['token'] = $this->usuario->getToken();
                     $_SESSION['id_usuario'] = $this->usuario->getIdUsuario();
-                    $usuarioController = new UsuarioController();
-                    $usuarioController->administrador();
+                    header('Location: http://localhost/blog/usuario/administrador');
                 }else if($this->usuario == false){
                     // Usuario não encontrado
                     $erro['erro_login'] = "Email ou senha inválidos!";
@@ -41,9 +40,7 @@ class LoginController extends Controller{
 
         }else{
             // Já existe sessão
-            $categoriaModel = new CategoriaModel();
-            $categorias = $categoriaModel->listarCategorias();
-            $this->carregarTemplate("administrador",array($categorias,""));
+            header('Location: http://localhost/blog/usuario/administrador');
         }
     }
     

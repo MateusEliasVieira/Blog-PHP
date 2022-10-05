@@ -15,8 +15,8 @@
     <header>
         <nav>
             <ul>
-                <li>Administrador</li>
-                <li><a href="/blog/login/encerrar">Sair</a></li>
+                <li id="li-adm">Administrativo</li>
+                <li><a id="sair-adm" href="/blog/login/encerrar">Sair</a></li>
             </ul>
         </nav>
         <div id="box-container-administrativo">
@@ -35,9 +35,6 @@
                     <li class="li-titulo">Usuários</li>
                     <li><a class="link-opcao" href="#">Adicionar usuário</a></li>
                     <li><a class="link-opcao" href="#">Listar usuários</a></li>
-                    <li class="li-titulo">Newsletter</li>
-                    <li><a class="link-opcao" href="#">Nova notícia</a></li>
-                    <li><a class="link-opcao" href="#">Inscritos</a></li>
                     <li class="li-titulo">Perfil</li>
                     <li><a class="link-opcao" href="http://localhost/blog/usuario/configuracoes">Configurações</a></li>
 

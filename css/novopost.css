@@ -1,12 +1,26 @@
 #section-novo-post{
     width:100%;
-    height:100%;
+    height:100vh;
+    overflow-y: auto;
     overflow-x: hidden;
     display: flex;
     flex-direction:row;
     justify-content: center;
     align-items: center;
+    /* background-color:#222224 !important; */
     background-color:#ffffff !important;
+    /* background-color:red !important; */
+}
+#form{
+    width: 80%;
+    height:100%;
+    padding:20px;
+    overflow-y: auto !important;
+    margin-top: 200px !important;
+    box-shadow: 0px 0px 30px rgb(218, 218, 218);
+}
+#form > h3{
+    padding:10px 0px 20px 0px;
 }
 /* Define a altura do ckeditor */
 .ck-editor__editable_inline{
