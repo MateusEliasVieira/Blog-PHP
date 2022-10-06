@@ -23,6 +23,7 @@ class UsuarioController extends Controller{
             $postModel = new PostModel();
             $categoriaModel = new CategoriaModel();
 
+            
             $qtd_usuario = $usuarioModel->qtd_usuario();
             $qtd_categoria = $categoriaModel->qtd_categoria();
             $qtd_postagem = $postModel->qtd_postagem();

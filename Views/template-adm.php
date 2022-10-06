@@ -1,6 +1,10 @@
 <?php 
     include("config/Config.php");
 ?>
+<?php
+    $usuarioModel = new UsuarioModel();
+    $usuario = $usuarioModel->buscarMeusDados();
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -23,8 +27,8 @@
      
             <section id="menu-administrativo">
                 <div id="dados-administrador">
-                    <img src="/blog/midia/uploads/author-somos-devs.jpg" width="120px" height="120px" alt="Imagem do administrador">
-                    <h6>Mateus Elias Vieira</h6>
+                    <img <?php if(!empty($usuario['caminho_imagem']) and $usuario['caminho_imagem'] != null){ echo "src='/blog/".$usuario['caminho_imagem']."'";}else{ echo "src='/blog/midia/uploads/author-somos-devs.jpg'";} ?>  width="120px" height="120px" alt="Imagem do administrador">
+                    <h6><?php echo $usuario['nome']; ?></h6>
                 </div>
                 <ul>
                     <li class="li-titulo">Administrador</li>

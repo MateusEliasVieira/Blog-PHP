@@ -47,6 +47,18 @@ class UsuarioModel{
 
     }
 
+    public function buscarMeusDados(){
+        try{
+            $sql = "SELECT * FROM usuario_adm WHERE id_usuario = :id_usuario";
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindValue(":id_usuario",$_SESSION['id_usuario']);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }catch(Exception $e){
+            die('Erro ao buscar dados do usuário administrador logado!');
+        }
+    }
+
     public function listarUsuariosAdm(){
 
     }

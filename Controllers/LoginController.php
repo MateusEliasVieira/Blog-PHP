@@ -23,8 +23,8 @@ class LoginController extends Controller{
                 $this->usuario = $loginModel->verificarLogin($email,$senha);
                
                 if(isset($this->usuario) and !empty($this->usuario)){
-                    $_SESSION['token'] = $this->usuario->getToken();
                     $_SESSION['id_usuario'] = $this->usuario->getIdUsuario();
+                    $_SESSION['token'] = $this->usuario->getToken();
                     header('Location: http://localhost/blog/usuario/administrador');
                 }else if($this->usuario == false){
                     // Usuario não encontrado

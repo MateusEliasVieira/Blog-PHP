@@ -9,6 +9,8 @@
 
 
 <?php
+    $usuarioModel = new UsuarioModel();
+    $usuario = $usuarioModel->buscarMeusDados();
     $erros = (isset($dados) and is_array($dados) and !empty($dados)) ? $dados : null;
     $resultado = (isset($dados) and is_bool($dados) and !empty($dados)) ? $dados : null;
 ?>
@@ -67,24 +69,31 @@
         <?php } ?>
 
         <div class="input-group">
-            <input name="nome" class="form-control form-control-lg" type="text" placeholder="Nome (obrigatório)" aria-label=".form-control-lg example">
-            <input name="email" class="form-control form-control-lg" type="email" placeholder="Email (obrigatório)" aria-label=".form-control-lg example">
+            <input name="nome" class="form-control form-control-lg" type="text" placeholder="Nome (obrigatório)" aria-label=".form-control-lg example" <?php if(isset($_POST['nome'])){ echo "value='".$_POST['nome']."'";}else{echo "value='".$usuario['nome']."'";} ?>>
+            <input name="email" class="form-control form-control-lg" type="email" placeholder="Email (obrigatório)" aria-label=".form-control-lg example" <?php if(isset($_POST['email'])){ echo "value='".$_POST['email']."'";}else{echo "value='".$usuario['email']."'";} ?>>
         </div>
-        <input name="whatsapp" class="form-control form-control-lg" type="number" placeholder="Whatsapp (Ex: 64911112222)" aria-label=".form-control-lg example">
+        <input name="whatsapp" class="form-control form-control-lg" type="number" placeholder="Whatsapp (Ex: 64911112222)" aria-label=".form-control-lg example" <?php if(isset($_POST['whatsapp'])){ echo "value='".$_POST['whatsapp']."'";}else{echo "value='".$usuario['whatsapp']."'";} ?>>
         <div class="input-group">
-            <input name="instagram" class="form-control form-control-lg" type="url" placeholder="Instagram" aria-label=".form-control-lg example">
-            <input name="facebook" class="form-control form-control-lg" type="url" placeholder="Facebook" aria-label=".form-control-lg example">
-        </div>
-        <div class="input-group">
-            <input name="twitter" class="form-control form-control-lg" type="url" placeholder="Twitter" aria-label=".form-control-lg example">
-            <input name="youtube" class="form-control form-control-lg" type="url" placeholder="YouTube" aria-label=".form-control-lg example">
+            <input name="instagram" class="form-control form-control-lg" type="url" placeholder="Instagram" aria-label=".form-control-lg example" <?php if(isset($_POST['instagram'])){ echo "value='".$_POST['instagram']."'";}else{echo "value='".$usuario['instagram']."'";} ?>>
+            <input name="facebook" class="form-control form-control-lg" type="url" placeholder="Facebook" aria-label=".form-control-lg example" <?php if(isset($_POST['facebook'])){ echo "value='".$_POST['facebook']."'";}else{echo "value='".$usuario['facebook']."'";} ?>>
         </div>
         <div class="input-group">
-            <input name="senha" class="form-control form-control-lg" type="password" placeholder="Senha (obrigatório)" aria-label=".form-control-lg example">
-            <input name="repete_senha" class="form-control form-control-lg" type="password" placeholder="Repita a senha (obrigatório)" aria-label=".form-control-lg example">
+            <input name="twitter" class="form-control form-control-lg" type="url" placeholder="Twitter" aria-label=".form-control-lg example" <?php if(isset($_POST['twitter'])){ echo "value='".$_POST['twitter']."'";}else{echo "value='".$usuario['twitter']."'";} ?>>
+            <input name="youtube" class="form-control form-control-lg" type="url" placeholder="YouTube" aria-label=".form-control-lg example" <?php if(isset($_POST['youtube'])){ echo "value='".$_POST['youtube']."'";}else{echo "value='".$usuario['youtube']."'";} ?>>
+        </div>
+        <div class="input-group">
+            <input name="senha" class="form-control form-control-lg" type="password" placeholder="Senha (obrigatório)" aria-label=".form-control-lg example" <?php if(isset($_POST['senha'])){ echo "value='".$_POST['senha']."'";} ?>>
+            <input name="repete_senha" class="form-control form-control-lg" type="password" placeholder="Repita a senha (obrigatório)" aria-label=".form-control-lg example" <?php if(isset($_POST['repete_senha'])){ echo "value='".$_POST['repete_senha']."'";} ?>>
         </div>
         <input name="arquivo" type="file" class="form-control" id="inputGroupFile04" title="Selecione sua foto" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-        <textarea name="sobre" id="trumbowyg-editor" class="editor" placeholder="Escreva sobre você!">
+        <textarea name="sobre" id="trumbowyg-editor" class="editor" placeholder="Escreva sobre você!" >
+            <?php 
+                if(isset($_POST['sobre'])){ 
+                    echo $_POST['sobre'];
+                } else{ 
+                    echo $usuario['sobre'];
+                }
+            ?>    
         </textarea>
         <input type="submit" name="submit_atualizar" class="btn btn-dark" value="Atualizar">
     </form>

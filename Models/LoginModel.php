@@ -13,7 +13,7 @@ class LoginModel{
     public function verificarLogin(string $email, string $senha){
         if(!empty($email) and !empty($senha)){
             try{
-                $stmt = $this->con->prepare("SELECT * FROM usuario_adm WHERE email = :email AND senha = :senha LIMIT 1");
+                $stmt = $this->con->prepare("SELECT U.id_usuario,U.token FROM usuario_adm as U WHERE email = :email AND senha = :senha LIMIT 1");
                 $stmt->bindValue(':email',$email);
                 $stmt->bindValue(':senha',sha1($senha));
                 $stmt->execute();
@@ -21,11 +21,7 @@ class LoginModel{
                 if(isset($resultado) and !empty($resultado)){
                     $usuario = new UsuarioEntidade();
                     $usuario->setIdUsuario($resultado['id_usuario']);
-                    $usuario->setNome($resultado['nome']);
-                    $usuario->setEmail($resultado['email']);
-                    $usuario->setSenha($resultado['senha']);
                     $usuario->setToken($resultado['token']);
-                    $usuario->setCaminhoImagem($resultado['caminho_imagem']);
                     return $usuario;
                 }else{
                     return false;
