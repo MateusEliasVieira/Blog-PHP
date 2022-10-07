@@ -51,6 +51,25 @@ class CategoriaModel{
         }
     }
 
+    public function atualizarQuantidadeDePostagensDaCategoria($id_categoria){
+        try{
+            $sql = "SELECT quantidade_postagens FROM categoria WHERE id_categoria = :id_categoria";
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindParam(':id_categoria',$id_categoria);
+            $stmt->execute();
+            extract($stmt->fetch(PDO::FETCH_ASSOC));
+            $quantidade_postagens -= 1;
+
+            $sql = "UPDATE categoria SET quantidade_postagens = :quantidade_postagens WHERE id_categoria = :id_categoria";
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindParam(':quantidade_postagens',$quantidade_postagens);
+            $stmt->bindParam(':id_categoria',$id_categoria);
+            return $stmt->execute();
+        }catch(Exception $e){
+            die("Erro ao buscar quantidade de categoria na base de dados!");
+        }
+    }
+
     
 }
 

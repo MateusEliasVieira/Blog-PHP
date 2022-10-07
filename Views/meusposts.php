@@ -34,13 +34,37 @@
                                 <input type="hidden" name="id_postagem" value="<?php echo $postagem['id_postagem'];?>"/>
                                 <input class="btn btn-primary" type="submit" value="Editar">
                             </form>
-                            <form action="" method="post">
-                                <input class="btn btn-danger" type="submit" value="Deletar">
-                            </form>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Deletar
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Deletar Postagem</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Deseja realmente deletar essa postagem ?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <form action="http://localhost/blog/usuario/excluir" method="post">
+                                                <input type="hidden" name="id_postagem" value="<?php echo $postagem['id_postagem'];?>"/>
+                                                <input class="btn btn-danger" type="submit" value="Confirmar">
+                                            </form>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                     </tr>
+                    
                 <?php } ?>
             </tbody>
         </table>
     </div>
+
+
 </section>

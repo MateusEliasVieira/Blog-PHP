@@ -89,6 +89,19 @@ class UsuarioController extends Controller{
         }
     }
 
+    public function excluir(){
+        if((isset($_SESSION['token']) and !empty($_SESSION['token'])) and (isset($_SESSION['id_usuario']) and !empty($_SESSION['id_usuario']))){
+            if(isset($_POST["id_postagem"]) and !empty($_POST["id_postagem"])){
+                $id_postagem = $this->limparEntradaDeDados($_POST["id_postagem"]);
+                $usuarioModel = new UsuarioModel();
+                $usuarioModel->deletarPostagem($id_postagem);
+                $this->meusposts();
+            }
+        }else{
+            $this->index();
+        }
+    }
+
     // Método para cadastrar uma nova postagem
     public function cadastrar(){
         if((isset($_SESSION['token']) and !empty($_SESSION['token'])) and (isset($_SESSION['id_usuario']) and !empty($_SESSION['id_usuario']))){
