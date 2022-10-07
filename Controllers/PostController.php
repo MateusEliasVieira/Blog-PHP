@@ -29,7 +29,6 @@ class PostController extends Controller{
     }
 
   
-
     // Curte uma postagem
     public function curtir(){
         if(isset($_POST['submit_curtir']) and isset($_POST['id_postagem']) and !empty($_POST['id_postagem']) and isset($_POST['titulo']) and !empty($_POST['titulo'])){
@@ -37,7 +36,7 @@ class PostController extends Controller{
             $titulo_post = $this->limparEntradaDeDados($_POST['titulo']);
             $postModel = new PostModel();
             $postModel->curtir($id_post);
-            $this->exibir($titulo_post);
+            header('Location: http://localhost/blog/post/exibir/'.str_replace(" ","-",$titulo_post)."#box-info-post");
         }
     }
 
@@ -59,7 +58,7 @@ class PostController extends Controller{
             $postModel = new PostModel();
             $resultado = $postModel->comentar($comentarioEntidade);
 
-            $this->exibir($titulo);
+            header('Location: http://localhost/blog/post/exibir/'.str_replace(" ","-",$titulo)."#box-info-post");
             
         }else{
             $titulo = $this->limparEntradaDeDados($_POST['titulo']);

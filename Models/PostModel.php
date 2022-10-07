@@ -243,7 +243,11 @@ class PostModel{
             $stmt = $this->con->prepare($sql);
             $stmt->bindValue(':curtidas',$curtidas);
             $stmt->bindValue(':id_postagem',$id_postagem);
-            return $stmt->execute();   
+            $resultado = $stmt->execute(); 
+            if($resultado){
+                setcookie($id_postagem,true,time()+(86400 * 30));
+            }  
+            return $resultado;
         }catch(Exception $e){
             die("Erro ao curtir postagem!");
         }

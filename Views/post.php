@@ -35,7 +35,11 @@
         <div id="box-info-post">
             <form method="post" action="http://localhost/blog/post/curtir">
                 <div id="box-curtir">
-                    <input id="input-curtir" type="submit" name="submit_curtir" title="Curtir postagem" value=""/> 
+                    <?php if(isset($_COOKIE[$postagem['id_postagem']]) and $_COOKIE[$postagem['id_postagem']] == true){ ?>
+                        <img src="/blog/midia/icones/coracao2.png" width="24px" alt="">
+                    <?php }else{ ?>
+                        <input id="input-curtir" type="submit" name="submit_curtir" title="Curtir postagem" value=""/> 
+                    <?php } ?>
                     <span id="span-curtida"> 
                         <?php echo $postagem['curtidas']." curtidas"; ?> 
                     </span>
