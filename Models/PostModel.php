@@ -76,6 +76,7 @@ class PostModel{
         }
     } 
 
+    // Deleta alguma postagem
     public function deletarPostagem($id_postagem){
         try{
             // Limpando $_POST
@@ -109,6 +110,7 @@ class PostModel{
         }
     }
 
+    // Deleta os comentários de uma postagem
     public function deletarComentariosDaPostagem($id_postagem){
         try{
             // Deletar comentarios primeiro
@@ -162,7 +164,6 @@ class PostModel{
         }
     }
 
-
     // Mostra a quantidade de postagens existentes
     public function qtd_postagem(){
         try{
@@ -203,7 +204,7 @@ class PostModel{
         }
     }
     
-    // lista usuarios e suas postagens pela categoria da postagem
+    // Lista usuários e suas postagens pela categoria da postagem
     public function listarUsuarioPostagensDaCategoria(string $categoria){
         try{
             $sql = "SELECT U.nome,P.titulo,P.conteudo,P.curtidas,P.quantidade_comentarios,P.data_postagem 
@@ -220,13 +221,10 @@ class PostModel{
             $stmt->execute();
             $usuario_postagens = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $usuario_postagens;
-
         }catch(Exception $e){
 
         }
     }
-
-  
 
     // Busca as postagens em destaque, isto é, as três primeiras mais recentes
     public function listarDestaques(){

@@ -21,21 +21,25 @@ class UsuarioModel{
 
     // =========================== Postagem  ===========================
 
+    // Cadastra uma nova postagem
     public function cadastrarNovaPostagem(PostEntidade $post){
         $postModel = new PostModel();
         $postModel->cadastrar($post);
     }
 
+    // Lista as postagens do usuário adm logado
     public function listarMinhasPostagens(){
         $postModel = new PostModel();
         $postModel->meusposts($_SESSION['id_postagem']);
     }
 
+    // Atualiza uma determinada postagem do usuário
     public function atualizarPostagem(PostEntidade $post){
         $postModel = new PostModel();
         $postModel->atualizar($post);
     }
 
+    // Deleta uma postagem do usuário 
     public function deletarPostagem($id_postagem){
         $postModel = new PostModel();
         return $postModel->deletarPostagem($id_postagem);
@@ -44,10 +48,12 @@ class UsuarioModel{
 
     // =========================== Usuário  ===========================
 
+    // Cadastra um novo usuário adm para o blog
     public function cadastrarNovoUsuarioAdm(){
 
     }
 
+    // Busca os dados do usuário logado
     public function buscarMeusDados(){
         try{
             $sql = "SELECT * FROM usuario_adm WHERE id_usuario = :id_usuario";
@@ -60,10 +66,12 @@ class UsuarioModel{
         }
     }
 
+    // Lista todos os usuários adm existentes
     public function listarUsuariosAdm(){
 
     }
 
+    // Atualiza os dados do usuário 
     public function atualizarDadosDoPerfil(UsuarioEntidade $usuarioEntidade){
 
         $nome = $usuarioEntidade->getNome();
@@ -100,7 +108,7 @@ class UsuarioModel{
         }
     }
 
-
+    // Mostra a quantidade de usuários adm existentes
     public function qtd_usuario(){
         try{
             $sql = "SELECT COUNT(id_usuario) AS qtd_usuario FROM usuario_adm";
@@ -113,6 +121,7 @@ class UsuarioModel{
         }
     }
 
+    // Realiza o upload de imagem(foto) do usuário adm
     private function uploadImagem(){
 
         if(isset($_FILES['arquivo']) and !empty($_FILES['arquivo']['name'])){

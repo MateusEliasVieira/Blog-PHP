@@ -10,6 +10,7 @@ class LoginModel{
         $this->con = Conexao::getConnection();
     }
 
+    // Verifica se existe o login realizado pelo usuário
     public function verificarLogin(string $email, string $senha){
         if(!empty($email) and !empty($senha)){
             try{

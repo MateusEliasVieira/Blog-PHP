@@ -98,7 +98,6 @@
         <input type="submit" name="submit_atualizar" class="btn btn-dark" value="Atualizar">
     </form>
 
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="../dist/trumbowyg.min.js"></script>
     <script type="text/javascript" src="../dist/langs/pt_br.min.js"></script>
@@ -113,7 +112,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/line-highlight/prism-line-highlight.min.js"></script>
     <script src="../dist/plugins/highlight/trumbowyg.highlight.min.js"></script>
     <script src="../dist/plugins/colors/trumbowyg.colors.min.js"></script>
-
 
     <script>
 

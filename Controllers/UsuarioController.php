@@ -9,31 +9,20 @@ class UsuarioController extends Controller{
         $postController->index();
     }
 
-    public function logado(){
-        // atualizar o token
-        $this->administrador();
-    }
-
     // Método para carregar a view de informações do blog (postagens,categorias...)
     public function administrador(){
         
         if((isset($_SESSION['token']) and !empty($_SESSION['token'])) and (isset($_SESSION['id_usuario']) and !empty($_SESSION['id_usuario']))){
-            // echo "<br>entrou no metodo administrador";
             $usuarioModel = new UsuarioModel();
             $postModel = new PostModel();
             $categoriaModel = new CategoriaModel();
 
-            
             $qtd_usuario = $usuarioModel->qtd_usuario();
             $qtd_categoria = $categoriaModel->qtd_categoria();
-            $qtd_postagem = $postModel->qtd_postagem();
-            // echo "<br>Quantidade de usuario = ".$qtd_usuario;    
-            // echo "<br>Quantidade de postagens = ".$qtd_postagem;    
-            // echo "<br>Quantidade de categoria = ".$qtd_categoria;    
+            $qtd_postagem = $postModel->qtd_postagem();  
 
             $this->carregarTemplate("administrador",array($qtd_usuario,$qtd_categoria,$qtd_postagem));
         }else{
-            // echo "<br>NÃO entrou no metodo administrador";
             $this->index();
         }
     }
@@ -215,7 +204,6 @@ class UsuarioController extends Controller{
                         }
                     }
 
-
                     // Verificar os outros campos que não são obrigatórios
                     if(!empty($_POST['whatsapp'])){
                         if(strlen($_POST['whatsapp']) < 11){
@@ -242,7 +230,6 @@ class UsuarioController extends Controller{
                             $erros['erro_youtube'] = "Link de url do youtube inválida!";
                         }
                     }
-      
                 
                 }else{
                     // Emitir mensagem que há campos obrigatorios que n foram preenchidos
@@ -281,12 +268,5 @@ class UsuarioController extends Controller{
             $this->index();
         }
     }
-
-    private function limparEntradaDeDados($valor){
-        $valor = trim($valor);
-        $valor = stripslashes($valor);
-        $valor = htmlspecialchars($valor);
-        return $valor;
-    }
-
+    
 }

@@ -1,4 +1,3 @@
-
 <link rel="stylesheet" href="<?php echo INCLUDE_PATH; ?>css/editarpost.css"/>
 <link rel="stylesheet" href="../dist/ui/trumbowyg.min.css">
 <link rel="stylesheet" href="../dist/ui/trumbowyg.css">
@@ -83,7 +82,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/line-highlight/prism-line-highlight.min.js"></script>
     <script src="../dist/plugins/highlight/trumbowyg.highlight.min.js"></script>
     <script src="../dist/plugins/colors/trumbowyg.colors.min.js"></script>
-
 
     <script>
 

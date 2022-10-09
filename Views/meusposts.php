@@ -1,9 +1,10 @@
-
 <link rel="stylesheet" href="<?php echo INCLUDE_PATH; ?>css/meusposts.css"/>
+
 <?php 
     $postagens = (isset($dados[0]) and !empty($dados[0]) and is_array($dados[0])) ? $dados[0] : null;
     $resultado = (isset($dados[1]) and !empty($dados[1]) and $dados[1] != null and is_bool($dados[1])) ? $dados[1] : null;
 ?>
+
 <section id="section-meusposts">
     <?php if($postagens != null){ ?>
         <div id="box-pesquisa">

@@ -2,6 +2,7 @@
 
 class CategoriaController extends Controller{
 
+    // Chama o método para mostrar a view home de post controller
     public function index(){
         $postController = new PostController();
         $postController->index();
@@ -22,11 +23,6 @@ class CategoriaController extends Controller{
         $this->carregarTemplate("home",$matriz);
     }
 
-    private function limparEntradaDeDados($valor){
-        $valor = trim($valor);
-        $valor = stripslashes($valor);
-        $valor = htmlspecialchars($valor);
-        return $valor;
-    }
+ 
     
 }

@@ -8,6 +8,7 @@ class Conexao{
 
     private function __construct(){}
 
+    // Realiza a conexão com o banco de dados usando o padrão singleton
     public static function getConnection(){
         if(!isset(self::$con)){
 

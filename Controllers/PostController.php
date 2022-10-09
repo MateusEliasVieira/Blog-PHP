@@ -2,8 +2,6 @@
 
 class PostController extends Controller{
 
-    // Métodos que podem ser acessados sem estar logado como adm
-
     // Busca os dados para mostrar na view home.php
     public function index(){
         $postModel = new PostModel();
@@ -28,7 +26,6 @@ class PostController extends Controller{
         $this->carregarTemplate("post",$matriz);
     }
 
-  
     // Curte uma postagem
     public function curtir(){
         if(isset($_POST['submit_curtir']) and isset($_POST['id_postagem']) and !empty($_POST['id_postagem']) and isset($_POST['titulo']) and !empty($_POST['titulo'])){
@@ -65,13 +62,6 @@ class PostController extends Controller{
             $erro = "Por favor, preencha todos os campos!";
             $this->exibir($titulo,$erro);
         }
-    }
-
-    private function limparEntradaDeDados($valor){
-        $valor = trim($valor);
-        $valor = stripslashes($valor);
-        $valor = htmlspecialchars($valor);
-        return $valor;
     }
 
 }

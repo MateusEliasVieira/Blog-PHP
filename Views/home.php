@@ -1,5 +1,5 @@
-
 <link rel="stylesheet" href="<?php echo INCLUDE_PATH; ?>css/home.css"/>
+
 <?php
     $usuario_postagens = (isset($dados[0]) and is_array($dados[0]) and !empty($dados[0])) ? $dados[0] : array();
     $destaques = (isset($dados[1]) and is_array($dados[1]) and !empty($dados[1])) ? $dados[1] : array();

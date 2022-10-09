@@ -10,12 +10,12 @@ class CategoriaModel{
         $this->con = Conexao::getConnection();
     }
 
-    // cadastra uma nova categoria
+    // Cadastra uma nova categoria
     public function cadastrarNovaCategoria(){
 
     }
 
-    // lista todas as categorias
+    // Lista todas as categorias
     public function listarCategorias(){
         try{
             $sql = "SELECT * FROM categoria";
@@ -28,17 +28,17 @@ class CategoriaModel{
         }
     }
 
-    // atualiza alguma categoria existente
+    // Atualiza alguma categoria existente
     public function atualizarCategoria(){
 
     }
 
-    // deleta uma categoria e suas respectivas postagens
+    // Deleta uma categoria e suas respectivas postagens
     public function deletarCategoriaESuasPostagens(){
 
     }
 
-    // mostra a quantidade de categorias existentes
+    // Mostra a quantidade de categorias existentes
     public function qtd_categoria(){
         try{
             $sql = "SELECT COUNT(id_categoria) AS qtd_categoria FROM categoria";
@@ -51,6 +51,7 @@ class CategoriaModel{
         }
     }
 
+    // Atualiza a quantidade de postagens da categoria
     public function atualizarQuantidadeDePostagensDaCategoria($id_categoria){
         try{
             $sql = "SELECT quantidade_postagens FROM categoria WHERE id_categoria = :id_categoria";

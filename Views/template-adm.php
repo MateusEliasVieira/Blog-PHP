@@ -1,10 +1,12 @@
 <?php 
     include("config/Config.php");
 ?>
+
 <?php
     $usuarioModel = new UsuarioModel();
     $usuario = $usuarioModel->buscarMeusDados();
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -20,7 +22,7 @@
         <nav>
             <ul>
                 <li id="li-adm">Administrativo</li>
-                <li><a id="sair-adm" href="/blog/login/encerrar">Sair</a></li>
+                <li><a id="sair-adm" href="<?php echo INCLUDE_PATH; ?>login/encerrar">Sair</a></li>
             </ul>
         </nav>
         <div id="box-container-administrativo">
@@ -32,15 +34,15 @@
                 </div>
                 <ul>
                     <li class="li-titulo">Administrador</li>
-                    <li><a class="link-opcao" href="http://localhost/blog/usuario/administrador">Informações</a></li>
+                    <li><a class="link-opcao" href="<?php echo INCLUDE_PATH; ?>usuario/administrador">Informações</a></li>
                     <li class="li-titulo">Postagem</li>
-                    <li><a class="link-opcao" href="http://localhost/blog/usuario/novopost">Nova postagem</a></li>
-                    <li><a class="link-opcao" href="http://localhost/blog/usuario/meusposts">Minhas postagens</a></li>
+                    <li><a class="link-opcao" href="<?php echo INCLUDE_PATH; ?>usuario/novopost">Nova postagem</a></li>
+                    <li><a class="link-opcao" href="<?php echo INCLUDE_PATH; ?>usuario/meusposts">Minhas postagens</a></li>
                     <li class="li-titulo">Usuários</li>
                     <li><a class="link-opcao" href="#">Adicionar usuário</a></li>
                     <li><a class="link-opcao" href="#">Listar usuários</a></li>
                     <li class="li-titulo">Perfil</li>
-                    <li><a class="link-opcao" href="http://localhost/blog/usuario/configuracoes">Configurações</a></li>
+                    <li><a class="link-opcao" href="<?php echo INCLUDE_PATH; ?>usuario/configuracoes">Configurações</a></li>
 
                 </ul>
             </section>
@@ -50,22 +52,17 @@
         </div>
     </header>
 
-
-
-
-    
-
     <footer>
         <div id="box-info-footer">
             <div id="box-contato">
                 <a href="">
-                    <img src="/blog/midia/icones/instagram.png" width="40px" alt="ícone instagram">
+                    <img src="<?php echo INCLUDE_PATH_ICONS; ?>instagram.png" width="40px" alt="ícone instagram">
                 </a>
                 <a href="">
-                    <img src="/blog/midia/icones/youtube.png" width="40px" alt="ícone youtube">
+                    <img src="<?php echo INCLUDE_PATH_ICONS; ?>youtube.png" width="40px" alt="ícone youtube">
                 </a>
                 <a href="">
-                    <img src="/blog/midia/icones/whatsapp.png" width="40px" alt="ícone whatsapp">
+                    <img src="<?php echo INCLUDE_PATH_ICONS; ?>whatsapp.png" width="40px" alt="ícone whatsapp">
                 </a>
             </div>
             <div id="box-descricao">
@@ -76,8 +73,7 @@
         </div>
     </footer>
     
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-    
 </body>
 </html>

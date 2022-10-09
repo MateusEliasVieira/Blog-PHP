@@ -1,4 +1,3 @@
-
 <link rel="stylesheet" href="<?php echo INCLUDE_PATH; ?>css/erro_404.css"/>
 
 <section id="section-erro-404">

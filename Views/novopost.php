@@ -1,4 +1,3 @@
-
 <link rel="stylesheet" href="<?php echo INCLUDE_PATH; ?>css/novopost.css"/>
 <link rel="stylesheet" href="../dist/ui/trumbowyg.min.css">
 <link rel="stylesheet" href="../dist/ui/trumbowyg.css">

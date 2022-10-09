@@ -6,10 +6,12 @@ class LoginController extends Controller{
 
     private $usuario;
 
+    // Carrega a tela de login para o usuário
     public function index(){
         $this->carregarTemplate("login",array());
     }
 
+    // Realiza o login do usuário
     public function logar(){
        
         if(!isset($_SESSION['token']) and !isset($_SESSION['id_usuario'])){
@@ -50,13 +52,6 @@ class LoginController extends Controller{
         session_unset();
         session_destroy();
         $this->index();
-    }
-
-    private function limparEntradaDeDados($valor){
-        $valor = trim($valor);
-        $valor = stripslashes($valor);
-        $valor = htmlspecialchars($valor);
-        return $valor;
     }
 
 }
