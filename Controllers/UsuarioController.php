@@ -65,7 +65,7 @@ class UsuarioController extends Controller{
             $id_usuario = $this->limparEntradaDeDados($_SESSION['id_usuario']); 
             $postModel = new PostModel();
             $posts = $postModel->meusposts($id_usuario);
-            $this->carregarTemplate("meusposts",$posts);
+            $this->carregarTemplate("meusposts",array($posts,null));
     
         }else{
             $this->index();
@@ -93,9 +93,14 @@ class UsuarioController extends Controller{
         if((isset($_SESSION['token']) and !empty($_SESSION['token'])) and (isset($_SESSION['id_usuario']) and !empty($_SESSION['id_usuario']))){
             if(isset($_POST["id_postagem"]) and !empty($_POST["id_postagem"])){
                 $id_postagem = $this->limparEntradaDeDados($_POST["id_postagem"]);
+               
                 $usuarioModel = new UsuarioModel();
-                $usuarioModel->deletarPostagem($id_postagem);
-                $this->meusposts();
+                $resultado = $usuarioModel->deletarPostagem($id_postagem);
+                
+                $id_usuario = $this->limparEntradaDeDados($_SESSION['id_usuario']); 
+                $postModel = new PostModel();
+                $posts = $postModel->meusposts($id_usuario);
+                $this->carregarTemplate("meusposts",array($posts,$resultado));
             }
         }else{
             $this->index();

@@ -78,11 +78,13 @@ class PostModel{
 
     public function deletarPostagem($id_postagem){
         try{
-            // Deletar os comentarios primeiro
+            // Limpando $_POST
+            unset($_POST);
+            // Deletar os comentários primeiro
             $resultado = $this->deletarComentariosDaPostagem($id_postagem);
             if($resultado){
 
-                // Diminuo a quantidade de postagens da categoria
+                // Decrementar a quantidade de postagens da categoria
                 $sql = "SELECT fk_id_categoria FROM postagem WHERE id_postagem = :id_postagem";
                 $stmt = $this->con->prepare($sql);
                 $stmt->bindParam(':id_postagem',$id_postagem);
@@ -93,29 +95,28 @@ class PostModel{
                 $resultado = $categoriaModel->atualizarQuantidadeDePostagensDaCategoria($fk_id_categoria);
 
                 if($resultado){
-                    // Deleto a postagem
+                    // Deletar a postagem
                     $sql = "DELETE FROM postagem WHERE id_postagem = :id_postagem";
                     $stmt = $this->con->prepare($sql);
                     $stmt->bindParam(':id_postagem',$id_postagem);
                     $resultado = $stmt->execute();
+                    return $resultado;
                 }
             }
-            unset($_POST);
+            return false;
         }catch(Exception $e){
-            echo $e->getMessage();
             die("Não foi possível deletar a postagem!");
         }
     }
 
     public function deletarComentariosDaPostagem($id_postagem){
         try{
-            // deletar comentarios primeiro
+            // Deletar comentarios primeiro
             $sql = "DELETE FROM comentario WHERE fk_id_postagem = :id_postagem";
             $stmt = $this->con->prepare($sql);
             $stmt->bindParam(':id_postagem',$id_postagem);
             return $stmt->execute();
         }catch(Exception $e){
-            echo $e->getMessage();
             die("Não foi possível deletar a postagem!");
         }
     }

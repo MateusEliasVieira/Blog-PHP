@@ -38,7 +38,7 @@ class UsuarioModel{
 
     public function deletarPostagem($id_postagem){
         $postModel = new PostModel();
-        $postModel->deletarPostagem($id_postagem);
+        return $postModel->deletarPostagem($id_postagem);
     }
 
 
