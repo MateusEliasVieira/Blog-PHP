@@ -177,6 +177,24 @@ class PostModel{
         }
     }
 
+    // Mostra a quantidade de postagens existentes
+    public function qtdPostagemUsuario($nome){
+        try{
+            $sql = "SELECT count(fk_id_usuario) AS qtd_postagem 
+            FROM postagem AS P 
+            INNER JOIN usuario_adm AS U 
+            ON p.fk_id_usuario = U.id_usuario
+            WHERE U.nome = :nome";
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindValue(":nome",$nome);
+            $stmt->execute();
+            extract($stmt->fetch(PDO::FETCH_ASSOC));
+            return $qtd_postagem;
+        }catch(Exception $e){
+            die("Erro ao buscar quantidade de postagens do usuário na base de dados!");
+        }
+    }
+
     // Lista as postagens do usuário que esta ativo na sessão
     public function meusposts($id_usuario){
         try{
@@ -194,7 +212,7 @@ class PostModel{
     // Lista todos os usuários e suas postagens 
     public function listarUsuarioPostagens(){
         try{
-            $sql = "SELECT U.nome,P.titulo,P.curtidas,P.quantidade_comentarios,P.data_postagem from usuario_adm as U inner join postagem as P on U.id_usuario = P.fk_id_usuario ORDER BY P.data_postagem DESC";
+            $sql = "SELECT U.nome,P.titulo,P.curtidas,P.visualizacoes,P.quantidade_comentarios,P.data_postagem from usuario_adm as U inner join postagem as P on U.id_usuario = P.fk_id_usuario ORDER BY P.data_postagem DESC";
             $stmt = $this->con->prepare($sql);
             $stmt->execute();
             $usuario_postagens = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -325,6 +343,43 @@ class PostModel{
             }
         }catch(Exception $e){
             die("Erro ao comentar sobre o post");
+        }
+    }
+
+    // Busca a quantidade de visualizações total das postagens de um autor
+    public function buscarQuantidadeDeVisualizacoes($nome_autor){
+        try{
+            $sql = "SELECT sum(visualizacoes) as visualizacoes
+            FROM postagem as P
+            inner join usuario_adm as U 
+            on P.fk_id_usuario = U.id_usuario
+            where U.nome = :nome_autor";
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindValue(':nome_autor',$nome_autor);
+            $stmt->execute();
+            extract($stmt->fetch(PDO::FETCH_ASSOC));
+            return $visualizacoes;
+        }catch(Exception $e){
+            die("Erro ao buscar quantidade de visualizações!");
+        }
+    }
+
+    // Atualiza as visualições de uma postagem ao entrar nela
+    public function atualizarVisualizacoes($titulo){
+        try{
+            $sql = "SELECT visualizacoes FROM postagem WHERE titulo = :titulo";
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindValue(':titulo',$titulo);
+            $stmt->execute();
+            extract($stmt->fetch(PDO::FETCH_ASSOC));
+            $visualizacoes += 1;
+            $sql = "UPDATE postagem SET visualizacoes = :visualizacoes WHERE titulo = :titulo";
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindValue(':visualizacoes',$visualizacoes);
+            $stmt->bindValue(':titulo',$titulo);
+            $stmt->execute();
+        }catch(Exception $e){
+            die("Erro ao atualizar visualizações");
         }
     }
 

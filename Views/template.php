@@ -31,20 +31,7 @@
                         <a class="link" href="<?php echo INCLUDE_PATH; ?>">Contato</a>
                         <a class="link" href="<?php echo INCLUDE_PATH; ?>">Sobre</a>
                     </div>
-                    <div id="box-redes-sociais">
-                        <a class="link-rs" href="">
-                            <img src="<?php echo INCLUDE_PATH_ICONS; ?>twitter-nav.png" width="32px" height="32px" alt="">
-                        </a>
-                        <a class="link-rs" href="">
-                            <img src="<?php echo INCLUDE_PATH_ICONS; ?>linkedin-nav.png" width="32px" height="32px" alt="">
-                        </a>
-                        <a class="link-rs" href="">
-                            <img src="<?php echo INCLUDE_PATH_ICONS; ?>youtube-nav.png" width="32px" height="32px" alt="">
-                        </a>
-                        <a class="link-rs" href="">
-                            <img src="<?php echo INCLUDE_PATH_ICONS; ?>instagram-nav.png" width="32px" height="32px" alt="">
-                        </a>
-                    </div>
+                    <a href="https://wa.me/5564992240834?text=Olá Mateus! Gostaria de ser um administrador do Somos.Devs!" target="_blank" class="btn btn-dark">Quero ser ADM!</a>
                 </div>
             </div>
         </nav>

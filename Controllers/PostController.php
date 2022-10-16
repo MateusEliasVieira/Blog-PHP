@@ -20,6 +20,7 @@ class PostController extends Controller{
         $titulo = $this->limparEntradaDeDados($titulo);
         $titulo = str_replace("-"," ",$titulo);
         $postModel = new PostModel();
+        $postModel->atualizarVisualizacoes($titulo);
         $postagem = $postModel->buscarPostPorTitulo($titulo);
         $postagem_comentarios = $postModel->buscarPostComentarios($titulo);
         $matriz = array($postagem,$postagem_comentarios, $aviso);

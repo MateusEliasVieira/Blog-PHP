@@ -66,6 +66,19 @@ class UsuarioModel{
         }
     }
 
+    // Busca um usuário específico para mostrar os dados como o autor da postagem
+    public function buscarUsuario($nome_autor){
+        try{
+            $sql = "SELECT nome,caminho_imagem,whatsapp,instagram,facebook,youtube,twitter,sobre FROM usuario_adm WHERE nome = :nome";
+            $stmt = $this->con->prepare($sql);
+            $stmt->bindValue(":nome",$nome_autor);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }catch(Exception $e){
+            die("Erro ao buscar usuário!");
+        }
+    }
+
     // Lista todos os usuários adm existentes
     public function listarUsuariosAdm(){
 

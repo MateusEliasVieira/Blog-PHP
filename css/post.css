@@ -40,13 +40,13 @@
     flex-direction:row;
     justify-content:space-between;
     align-items:center;
-    color: red;
+    color: white;
 }
 #input-curtir{
     background:none;
     width:24px; 
     height:24px;
-    background-image: url('/blog/midia/icones/coracao1.png');
+    background-image: url('/blog/midia/icones/curtir.png');
     background-size: cover;
     border: none;
     outline: none;
@@ -54,7 +54,7 @@
 }
 #input-curtir:hover{
     transition: 0.5s;
-    background-image: url('/blog/midia/icones/coracao2.png');
+    background-image: url('/blog/midia/icones/curtido.png');
 }
 .box-sobre-post{
     width:150px;

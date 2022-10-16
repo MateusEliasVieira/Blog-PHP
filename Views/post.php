@@ -36,7 +36,7 @@
             <form method="post" action="http://localhost/blog/post/curtir">
                 <div id="box-curtir">
                     <?php if(isset($_COOKIE[$postagem['id_postagem']]) and $_COOKIE[$postagem['id_postagem']] == true){ ?>
-                        <img src="/blog/midia/icones/coracao2.png" width="24px" alt="">
+                        <img src="<?php echo INCLUDE_PATH_ICONS; ?>curtido.png" width="24px" alt="">
                     <?php }else{ ?>
                         <input id="input-curtir" type="submit" name="submit_curtir" title="Curtir postagem" value=""/> 
                     <?php } ?>
@@ -48,7 +48,11 @@
                 <input type="hidden" name="id_postagem" value="<?php echo $postagem['id_postagem']?>"/>
             </form>
             <div class="box-sobre-post">
-                <img src="/blog/midia/icones/comentarios.png" alt="ícone de comentários" width="24px" height="24px"/>
+                <img src="<?php echo INCLUDE_PATH_ICONS; ?>visualizacao2.png" alt="ícone de visualizações" width="24px" height="24px"/>
+                <span id="span-visualizacao"> <?php echo $postagem['visualizacoes']; ?> visualizações</span>
+            </div>
+            <div class="box-sobre-post">
+                <img src="<?php echo INCLUDE_PATH_ICONS; ?>comentarios.png" alt="ícone de comentários" width="24px" height="24px"/>
                 <span id="span-comentarios"> <?php echo $postagem['quantidade_comentarios']; ?> comentários</span>
             </div>
         </div>

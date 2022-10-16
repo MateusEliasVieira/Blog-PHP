@@ -33,7 +33,7 @@
                                 // echo "Postado em ".$data_formatada." às ".$horario_formatado." <b>|</b> Autor: ".$usuario_postagem['nome'];
                             ?>
                             <span><?php echo "Postado em ".$data_formatada." às ".$horario_formatado; ?></span>
-                            <span><?php echo "[ Autor: ".$usuario_postagem['nome']." ]"; ?></span>
+                            <span><?php echo "<a class='link-autor' href='/blog/autor/exibir/".str_replace(" ","-",$usuario_postagem['nome'])."'>".$usuario_postagem['nome']." </a>"; ?></span>
                         </p>
                     </div>
 
@@ -45,11 +45,15 @@
                         <a <?php echo 'href="/blog/post/exibir/'.str_replace(" ","-",$usuario_postagem['titulo']).'"'; ?> class="btn-ler-mais">Leia mais</a>
                         <div class="informacoes-do-post">
                             <div >
-                                <img src="/blog/midia/icones/coracao2.png" width="24px" alt="">
+                                <img src="<?php echo INCLUDE_PATH_ICONS; ?>curtidas.png" width="24px" alt="Icone curtidas" title="Curtidas" />
                                 <span><?php echo $usuario_postagem['curtidas'];?></span>
                             </div>
                             <div >
-                                <img src="/blog/midia/icones/comentario.png" width="24px" alt="">
+                                <img src="<?php echo INCLUDE_PATH_ICONS; ?>visualizacao.png" width="24px" alt="Icone visualizações" title="Visualizações" />
+                                <span><?php echo $usuario_postagem['visualizacoes'];?></span>
+                            </div>
+                            <div >
+                                <img src="/blog/midia/icones/comentario.png" width="24px" alt="Icone comentários" title="Comentários">
                                 <span><?php echo $usuario_postagem['quantidade_comentarios'];?></span>
                             </div>
                         </div>
