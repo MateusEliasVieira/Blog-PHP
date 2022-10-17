@@ -198,7 +198,7 @@ class PostModel{
     // Lista as postagens do usuário que esta ativo na sessão
     public function meusposts($id_usuario){
         try{
-            $sql = "SELECT P.id_postagem, P.titulo, P.conteudo , P.curtidas, P.quantidade_comentarios, P.data_postagem FROM postagem as P inner join usuario_adm as U on U.id_usuario = P.fk_id_usuario WHERE U.id_usuario = :id_usuario ORDER BY P.data_postagem DESC";
+            $sql = "SELECT P.id_postagem, P.titulo, P.conteudo , P.curtidas, P.visualizacoes, P.quantidade_comentarios, P.data_postagem FROM postagem as P inner join usuario_adm as U on U.id_usuario = P.fk_id_usuario WHERE U.id_usuario = :id_usuario ORDER BY P.data_postagem DESC";
             $stmt = $this->con->prepare($sql);
             $stmt->bindValue(':id_usuario',$id_usuario);
             $stmt->execute();

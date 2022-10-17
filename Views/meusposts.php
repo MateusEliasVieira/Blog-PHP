@@ -41,6 +41,7 @@
                         <th scope="col">Id</th>
                         <th scope="col">Título</th>
                         <th scope="col">Curtidas</th>
+                        <th scope="col">Visualizações</th>
                         <th scope="col">Comentários</th>
                         <th scope="col">Data de Postagem</th>
                         <th scope="col">Opções</th>
@@ -52,6 +53,7 @@
                             <th scope="row"><?php echo $postagem['id_postagem']; ?></th>
                             <td><?php echo $postagem['titulo']; ?></td>
                             <td><?php echo $postagem['curtidas']; ?></td>
+                            <td><?php echo $postagem['visualizacoes']; ?></td>
                             <td><?php echo $postagem['quantidade_comentarios']; ?></td>
                             <td><?php echo $postagem['data_postagem']; ?></td>
                             <td class="td-opcoes">
