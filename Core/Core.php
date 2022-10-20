@@ -73,6 +73,7 @@ class Core{
         // instancio a classe controller
         $obj = new $this->classe_controller;
         
+        
         // caso tenha parametros para o metodo
         if(!empty($this->parametro_metodo_classe_controller)){
             call_user_func_array(array($obj, $this->metodo_classe_controller), array($this->parametro_metodo_classe_controller));
@@ -80,6 +81,7 @@ class Core{
             // caso não tenha parametros para o metodo
             call_user_func_array(array($obj, $this->metodo_classe_controller), array());
         }
+        
 
     }
 

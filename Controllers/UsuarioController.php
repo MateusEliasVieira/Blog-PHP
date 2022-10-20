@@ -203,39 +203,55 @@ class UsuarioController extends Controller{
                             $erros['erro_senha'] = "A senha deve ter no mínimo 6 caracteres!";
                         }
                     }
-
-                    // Verificar os outros campos que não são obrigatórios
-                    if(!empty($_POST['whatsapp'])){
-                        if(strlen($_POST['whatsapp']) < 11){
-                            $erros['erro_whatsapp'] = "Whatsapp inválido! Necessário ter 11 dígitos";
-                        }
-                    }
-                    if(!empty($_POST['instagram'])){
-                        if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$_POST['instagram'])) {
-                            $erros['erro_instagram'] = "Link de url do instagram inválida!";
-                        }
-                    }
-                    if(!empty($_POST['twitter'])){
-                        if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$_POST['twitter'])) {
-                            $erros['erro_twitter'] = "Link de url do twitter inválida!";
-                        }
-                    }
-                    if(!empty($_POST['facebook'])){
-                        if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$_POST['facebook'])) {
-                            $erros['erro_facebook'] = "Link de url do facebook inválida!";
-                        }
-                    }
-                    if(!empty($_POST['youtube'])){
-                        if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$_POST['youtube'])) {
-                            $erros['erro_youtube'] = "Link de url do youtube inválida!";
-                        }
-                    }
-                
                 }else{
-                    // Emitir mensagem que há campos obrigatorios que n foram preenchidos
+                    // Emitir mensagem que há campos obrigatorios que não foram preenchidos
                     $erros['erro_campos'] = 'Há campos obrigatórios que não foram preenchidos!';
                 }
 
+                // Verificar os outros campos que não são obrigatórios
+                if(!empty($_POST['whatsapp'])){
+                    if(strlen($_POST['whatsapp']) < 11){
+                        $erros['erro_whatsapp'] = "Whatsapp inválido! Necessário ter 11 dígitos";
+                    }
+                }
+                if(!empty($_POST['instagram'])){
+                    if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$_POST['instagram'])) {
+                        $erros['erro_instagram'] = "Link de url do instagram inválida!";
+                    }
+                }
+                if(!empty($_POST['twitter'])){
+                    if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$_POST['twitter'])) {
+                        $erros['erro_twitter'] = "Link de url do twitter inválida!";
+                    }
+                }
+                if(!empty($_POST['facebook'])){
+                    if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$_POST['facebook'])) {
+                        $erros['erro_facebook'] = "Link de url do facebook inválida!";
+                    }
+                }
+                if(!empty($_POST['youtube'])){
+                    if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$_POST['youtube'])) {
+                        $erros['erro_youtube'] = "Link de url do youtube inválida!";
+                    }
+                }
+                if(isset($_FILES['arquivo']) and !empty($_FILES['arquivo']['name'])){
+                    $formatos_permitidos = array("jpg", "jpeg", "png");
+                    $tamanho_imagem_permitido = 26214400;
+            
+                    $nome_imagem = $_FILES['arquivo']['name'];
+                    $formato_imagem = explode(".",$nome_imagem)[1];
+                    $tamanho_imagem = $_FILES['arquivo']['size'];
+                        
+                    if(!in_array($formato_imagem,$formatos_permitidos)){
+                        // Formato não permitido
+                        $erros['erro_formato'] = "Formato de arquivo inválido! Permitido apenas (jpg, jpeg e png).";     
+                    }
+                    if(!($tamanho_imagem < $tamanho_imagem_permitido)){
+                        // Muito grande a imagem
+                        $erros['erro_tamanho'] = "Tamanho da imagem é muito grande! Máximo(25Mb)";
+                    }
+                }
+                        
             }else{
                 // Houve um problema ao enviar o formulário
                 $erros['erro_formulario'] = 'Você não preencheu o formulário de atualização!';
@@ -268,5 +284,6 @@ class UsuarioController extends Controller{
             $this->index();
         }
     }
+
     
 }

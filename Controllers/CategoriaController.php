@@ -9,18 +9,23 @@ class CategoriaController extends Controller{
     }
 
     // Mostra as postagens apenas de uma determinada categoria
-    public function categoria(string $categoria){
-        $categoria = $this->limparEntradaDeDados($categoria);
+    public function categoria(string $categoria=""){
 
-        $postModel = new PostModel();
-        $categoriaModel = new CategoriaModel();
-
-        $usuario_postagens = $postModel->listarUsuarioPostagensDaCategoria($categoria);
-        $destaques = $postModel->listarDestaques();
-        $categorias = $categoriaModel->listarCategorias();
-
-        $matriz = array($usuario_postagens,$destaques,$categorias);
-        $this->carregarTemplate("home",$matriz);
+        if(!empty($categoria)){
+            $categoria = $this->limparEntradaDeDados($categoria);
+    
+            $postModel = new PostModel();
+            $categoriaModel = new CategoriaModel();
+    
+            $usuario_postagens = $postModel->listarUsuarioPostagensDaCategoria($categoria);
+            $destaques = $postModel->listarDestaques();
+            $categorias = $categoriaModel->listarCategorias();
+    
+            $matriz = array($usuario_postagens,$destaques,$categorias);
+            $this->carregarTemplate("home",$matriz);
+        }else{
+            header("Location: http://localhost/blog/");
+        }
     }
 
  

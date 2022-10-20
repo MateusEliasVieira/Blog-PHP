@@ -225,7 +225,7 @@ class PostModel{
     // Lista usuários e suas postagens pela categoria da postagem
     public function listarUsuarioPostagensDaCategoria(string $categoria){
         try{
-            $sql = "SELECT U.nome,P.titulo,P.conteudo,P.curtidas,P.quantidade_comentarios,P.data_postagem 
+            $sql = "SELECT U.nome,P.titulo,P.conteudo,P.curtidas,P.visualizacoes,P.quantidade_comentarios,P.data_postagem 
             FROM usuario_adm AS U 
             INNER JOIN postagem AS P 
             ON U.id_usuario = P.fk_id_usuario 

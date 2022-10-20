@@ -16,15 +16,20 @@ class PostController extends Controller{
     }
 
     // Redireciona para a página da postagem em específica, após clicada nela
-    public function exibir(string $titulo, $aviso = ""){
-        $titulo = $this->limparEntradaDeDados($titulo);
-        $titulo = str_replace("-"," ",$titulo);
-        $postModel = new PostModel();
-        $postModel->atualizarVisualizacoes($titulo);
-        $postagem = $postModel->buscarPostPorTitulo($titulo);
-        $postagem_comentarios = $postModel->buscarPostComentarios($titulo);
-        $matriz = array($postagem,$postagem_comentarios, $aviso);
-        $this->carregarTemplate("post",$matriz);
+    public function exibir(string $titulo="", $aviso = ""){
+        
+        if(!empty($titulo)) {
+            $titulo = $this->limparEntradaDeDados($titulo);
+            $titulo = str_replace("-"," ",$titulo);
+            $postModel = new PostModel();
+            $postModel->atualizarVisualizacoes($titulo);
+            $postagem = $postModel->buscarPostPorTitulo($titulo);
+            $postagem_comentarios = $postModel->buscarPostComentarios($titulo);
+            $matriz = array($postagem,$postagem_comentarios, $aviso);
+            $this->carregarTemplate("post",$matriz);
+        }else{
+            header("Location: http://localhost/blog/");
+        }
     }
 
     // Curte uma postagem

@@ -5,6 +5,7 @@ require_once "lib/database/Conexao.php";
 class UsuarioModel{
 
     private $con;
+    private string $caminho_imagem;
     private $erro_upload = array();
 
     public function __construct(){
@@ -96,9 +97,19 @@ class UsuarioModel{
         $youtube = $usuarioEntidade->getYoutube();
         $sobre = $usuarioEntidade->getSobre();
         $senha = $usuarioEntidade->getSenha();
-        $caminho_imagem = $this->uploadImagem();
-        
+        $this->caminho_imagem = $this->uploadImagem();
+
         try{
+
+            if(empty($this->caminho_imagem)){
+                $sql = "SELECT caminho_imagem FROM usuario_adm WHERE id_usuario = :id_usuario";
+                $stmt = $this->con->prepare($sql);
+                $stmt->bindValue(':id_usuario',$_SESSION['id_usuario']);
+                $stmt->execute();
+                $caminho = $stmt->fetch(PDO::FETCH_ASSOC);
+                $this->caminho_imagem = $caminho['caminho_imagem'];
+            }
+
             $sql = "UPDATE usuario_adm SET nome = :nome, email = :email, whatsapp = :whatsapp, instagram = :instagram, facebook = :facebook, twitter = :twitter, youtube = :youtube, sobre = :sobre, senha = :senha, caminho_imagem = :caminho_imagem WHERE id_usuario = :id_usuario"; 
             
             $stmt = $this->con->prepare($sql);
@@ -112,7 +123,7 @@ class UsuarioModel{
             $stmt->bindParam(':sobre',$sobre); 
             $senha_criptografada = sha1($senha);
             $stmt->bindParam(':senha',$senha_criptografada); 
-            $stmt->bindParam(':caminho_imagem',$caminho_imagem);
+            $stmt->bindParam(':caminho_imagem',$this->caminho_imagem);
             $stmt->bindParam(':id_usuario',$_SESSION['id_usuario']);
             
             return $stmt->execute(); 
