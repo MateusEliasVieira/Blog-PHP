@@ -4,6 +4,7 @@
     $usuario_postagens = (isset($dados[0]) and is_array($dados[0]) and !empty($dados[0])) ? $dados[0] : array();
     $destaques = (isset($dados[1]) and is_array($dados[1]) and !empty($dados[1])) ? $dados[1] : array();
     $categorias = (isset($dados[2]) and is_array($dados[2]) and !empty($dados[2])) ? $dados[2] : array();
+    $mensagem = (isset($dados[3]) and is_string($dados[3]) and !empty($dados[3])) ? $dados[3] : "";
 ?>
 
 <section id="section-home"> 
@@ -76,7 +77,7 @@
             </div>
             <div id="box-inputs">
                 <form action="/blog/inscrito/inscrever" method="post">
-                    <input type="email" class="form-control" placeholder="Deixe seu email" required="required" title="Escolha seu melhor email">
+                    <input type="email" name="email" class="form-control" placeholder="Deixe seu email" required="required" title="Escolha seu melhor email">
                     <input type="submit" value="inscrever-me" class="btn btn-dark">
                 </form>
             </div>
@@ -127,5 +128,12 @@
         </div>
 
     </div>
+
+    <?php if($mensagem != ""){ ?>
+        <script>
+            alert('<?php echo $mensagem; ?>');
+        </script>
+    <?php } ?>
+
 
 </section>
